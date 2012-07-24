@@ -25,6 +25,12 @@
 	</properties>
 
 	<dependencies>
+		<!-- JavaX Servlet -->
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>3.0.1</version>
+		</dependency>
 		<!-- SLF4J -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -107,6 +113,12 @@
 			<artifactId>struts2-tiles-plugin</artifactId>
 			<version>${struts.version}</version>
 		</dependency>
+		<!--Struts2 Bootstrap -->
+		<dependency>
+	        <groupId>com.jgeppert.struts2.bootstrap</groupId>
+	        <artifactId>struts2-bootstrap-plugin</artifactId>
+	        <version>1.4.3</version>
+	    </dependency>
 		<!-- Tiles -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>

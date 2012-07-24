@@ -21,6 +21,6 @@ exit;
 mysql -u panssh --password=panssh panssh
 mysql -u panssh --password=panssh pansshtest
 
-\.MySQLCreateTables.sql
+\. MySQLCreateTables.sql
 
 exit;

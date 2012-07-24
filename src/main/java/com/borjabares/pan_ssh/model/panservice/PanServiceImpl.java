@@ -86,33 +86,24 @@ public class PanServiceImpl implements PanService {
 	@Override
 	@Transactional(readOnly = true)
 	public ObjectBlock<User> listAllUsers(int startIndex, int count) {
-		int pageNum;
-		pageNum = (int) Math.ceil((double) userDao.getNumberOfUsers()
-				/ (double) count);
 		return new ObjectBlock<User>(userDao.listUsers(startIndex, count),
-				pageNum);
+				count, userDao.getNumberOfUsers());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public ObjectBlock<User> listAllUsersSortedBy(int startIndex, int count,
 			String criteria, boolean asc) {
-		int pageNum;
-		pageNum = (int) Math.ceil((double) userDao.getNumberOfUsers()
-				/ (double) count);
 		return new ObjectBlock<User>(userDao.listUsersSorted(startIndex, count,
-				criteria, asc), pageNum);
+				criteria, asc), count, userDao.getNumberOfUsers());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public ObjectBlock<User> listUsersByLevel(int startIndex, int count,
 			Level level) {
-		int pageNum;
-		pageNum = (int) Math.ceil((double) userDao.getNumberOfUsers()
-				/ (double) count);
 		return new ObjectBlock<User>(userDao.listUsersOfLevel(startIndex,
-				count, level), pageNum);
+				count, level), count, userDao.getNumberOfUsers());
 	}
 
 	@Override
@@ -168,33 +159,26 @@ public class PanServiceImpl implements PanService {
 	@Override
 	@Transactional(readOnly = true)
 	public ObjectBlock<Links> listLinks(int startIndex, int count) {
-		int pageNum;
-		pageNum = (int) Math.ceil((double) linksDao.getNumberOfLinks()
-				/ (double) count);
 		return new ObjectBlock<Links>(linksDao.listLinks(startIndex, count),
-				pageNum);
+				count, linksDao.getNumberOfLinks());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public ObjectBlock<Links> listLinksByUserId(int startIndex, int count,
 			long userId) {
-		int pageNum;
-		pageNum = (int) Math.ceil((double) linksDao
-				.getNumberOfLinksByUserId(userId) / (double) count);
 		return new ObjectBlock<Links>(linksDao.getLinksByUserId(startIndex,
-				count, userId), pageNum);
+				count, userId), count,
+				linksDao.getNumberOfLinksByUserId(userId));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public ObjectBlock<Links> listLinksByStatus(int startIndex, int count,
 			LinkStatus status) {
-		int pageNum;
-		pageNum = (int) Math.ceil((double) linksDao
-				.getNumberOfLinksByStatus(status) / (double) count);
 		return new ObjectBlock<Links>(linksDao.getLinksByStatus(startIndex,
-				count, status), pageNum);
+				count, status), count,
+				linksDao.getNumberOfLinksByStatus(status));
 	}
 
 	@Override
@@ -262,11 +246,8 @@ public class PanServiceImpl implements PanService {
 	@Override
 	@Transactional(readOnly = true)
 	public ObjectBlock<Report> listPendingReports(int startIndex, int count) {
-		int pageNum;
-		pageNum = (int) Math.ceil((double) reportDao
-				.getNumberOfPendingReports() / (double) count);
 		return new ObjectBlock<Report>(reportDao.getPendingReports(startIndex,
-				count), pageNum);
+				count), count, reportDao.getNumberOfPendingReports());
 	}
 
 	@Override
@@ -283,12 +264,12 @@ public class PanServiceImpl implements PanService {
 
 	@Override
 	@Transactional
-	public LinkVote createVote(LinkVote vote) throws IpVotedException, UserVotedException {
+	public LinkVote createVote(LinkVote vote) throws IpVotedException,
+			UserVotedException {
 		if (vote.getUser() == null) {
-			if (voteDao.ipVoted(vote.getIp(), vote
-					.getLink().getLinkId())) {
-				throw new IpVotedException(vote.getIp(), vote
-						.getLink().getLinkId());
+			if (voteDao.ipVoted(vote.getIp(), vote.getLink().getLinkId())) {
+				throw new IpVotedException(vote.getIp(), vote.getLink()
+						.getLinkId());
 			}
 		} else {
 			if (voteDao.userVotedLink(vote.getUser().getUserId(), vote
