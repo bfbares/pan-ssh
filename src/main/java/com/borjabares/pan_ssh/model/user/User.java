@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import com.borjabares.pan_ssh.util.GlobalNames.Level;
+import com.borjabares.pan_ssh.util.Trimmer;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
@@ -25,8 +26,8 @@ import com.opensymphony.xwork2.validator.annotations.Validations;
 		@RequiredStringValidator(fieldName = "email", message = "Debe proporcionar un correo electrónico.", key = "error.email.required", shortCircuit = true),
 		@RequiredStringValidator(fieldName = "password", message = "Debe proporcionar una contraseña.", key = "error.password.required", trim = true, shortCircuit = true) }, 
 		stringLengthFields = {
-		@StringLengthFieldValidator(fieldName = "login", minLength = "4", maxLength = "15", message = "El nombre de usuario debe tener entre ${minLength} y ${maxLength} caracteres.", key = "error.login.length"),
-		@StringLengthFieldValidator(fieldName = "password", minLength = "6", maxLength = "15", message = "La contraseña debe tener entre ${minLength} y ${maxLength} caracteres.", key = "error.password.length") }, 
+		@StringLengthFieldValidator(fieldName = "login", minLength = "4", maxLength = "15", trim = true, message = "El nombre de usuario debe tener entre ${minLength} y ${maxLength} caracteres.", key = "error.login.length"),
+		@StringLengthFieldValidator(fieldName = "password", minLength = "6", maxLength = "15", trim = true, message = "La contraseña debe tener entre ${minLength} y ${maxLength} caracteres.", key = "error.password.length") }, 
 		emails = { 
 		@EmailValidator(fieldName = "email", message = "Debe introducir un correo electrónico válido.", key = "error.email.validator") }
 )
@@ -55,8 +56,8 @@ public class User {
 	}
 
 	public User(String login, String password, String email, String ip) {
-		this.login = login;
-		this.password = password;
+		this.login = Trimmer.trim(login);
+		this.password = Trimmer.trim(password);
 		this.email = email;
 		this.ip = ip;
 		this.created = Calendar.getInstance();
@@ -90,7 +91,7 @@ public class User {
 	}
 
 	public void setLogin(String login) {
-		this.login = login;
+		this.login = Trimmer.trim(login);
 	}
 
 	public String getPassword() {
@@ -98,7 +99,7 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = Trimmer.trim(password);
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

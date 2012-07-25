@@ -15,12 +15,32 @@
 				class="org.apache.struts2.views.tiles.TilesResult" default="true" />
 		</result-types>
 
+		<global-results>
+			<result name="error">/error</result>
+		</global-results>
+
+		<!-- Uncomment for deployment -->
+		<!--  
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception"
+				result="error" />
+		</global-exception-mappings>
+		-->
+
 		<action name="index">
 			<result>/index</result>
 		</action>
-		
+
 		<action name="firstrun">
 			<result>/firstrun</result>
+		</action>
+		
+		<action name="register">
+			<result>/userForm</result>
+		</action>
+		
+		<action name="userSuccess">
+			<result>/userSuccess</result>
 		</action>
 
 	</package>

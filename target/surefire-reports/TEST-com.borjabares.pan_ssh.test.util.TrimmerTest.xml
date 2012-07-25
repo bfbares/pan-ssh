@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="8.37" errors="0" skipped="0" tests="26" name="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest">
+<testsuite failures="0" time="0.005" errors="0" skipped="0" tests="2" name="com.borjabares.pan_ssh.test.util.TrimmerTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries"/>
@@ -65,30 +65,6 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="6.707" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindUser"/>
-  <testcase time="0.042" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findNonExistentUserId"/>
-  <testcase time="0.036" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedLoginUsers"/>
-  <testcase time="0.028" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedEmailUsers"/>
-  <testcase time="0.043" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findUserByLevel"/>
-  <testcase time="0.029" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="modifyUser"/>
-  <testcase time="0.035" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="deleteUser"/>
-  <testcase time="0.045" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="login"/>
-  <testcase time="0.071" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindCategory"/>
-  <testcase time="0.044" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createNonExistentCategoryId"/>
-  <testcase time="0.019" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createNonExistentParentCategoryId"/>
-  <testcase time="0.037" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedCategories"/>
-  <testcase time="0.084" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindLink"/>
-  <testcase time="0.105" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findNonExistentLinkId"/>
-  <testcase time="0.048" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedLink"/>
-  <testcase time="0.127" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindReport"/>
-  <testcase time="0.05" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findNonExistenReportId"/>
-  <testcase time="0.061" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createReportedLink"/>
-  <testcase time="0.13" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listPendingReports"/>
-  <testcase time="0.148" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listLinksByUserId"/>
-  <testcase time="0.085" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listLinksByStatus"/>
-  <testcase time="0.067" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindAnonymousVote"/>
-  <testcase time="0.044" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindNonAnonymousVote"/>
-  <testcase time="0.017" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findNonExistentVote"/>
-  <testcase time="0.024" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedIpAnonymousVote"/>
-  <testcase time="0.025" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedVote"/>
+  <testcase time="0" classname="com.borjabares.pan_ssh.test.util.TrimmerTest" name="testBlank"/>
+  <testcase time="0" classname="com.borjabares.pan_ssh.test.util.TrimmerTest" name="testOthers"/>
 </testsuite>

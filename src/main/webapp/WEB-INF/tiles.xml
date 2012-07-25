@@ -20,4 +20,16 @@
         <put-attribute name="body" value="/jsp/firstrunform.jsp" />
     </definition>
     
+    <definition name="/error" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/error.jsp" />
+    </definition>
+    
+    <definition name="/userForm" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/userForm.jsp" />
+    </definition>
+    
+    <definition name="/userSuccess" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/userSuccess.jsp" />
+    </definition>
+    
 </tiles-definitions>

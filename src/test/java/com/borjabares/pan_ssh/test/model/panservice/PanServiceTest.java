@@ -53,7 +53,7 @@ public class PanServiceTest {
 	@Test(expected = DuplicatedUserLoginException.class)
 	public void createDuplicatedLoginUsers() throws Exception {
 		User user1 = new User("Luis", "Luis", "luis1@gmail.com", "192.168.1.1");
-		User user2 = new User("Luis", "Luis", "luis2@gmail.com", "192.168.1.1");
+		User user2 = new User("luis", "Luis", "luis2@gmail.com", "192.168.1.1");
 		panService.createUser(user1);
 		panService.createUser(user2);
 	}

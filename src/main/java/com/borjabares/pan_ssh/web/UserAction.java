@@ -1,31 +1,32 @@
 package com.borjabares.pan_ssh.web;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.beans.factory.annotation.Autowired;
-import javax.servlet.http.HttpServletRequest;
 
+import com.borjabares.pan_ssh.exceptions.DuplicatedUserEmailException;
+import com.borjabares.pan_ssh.exceptions.DuplicatedUserLoginException;
+import com.borjabares.pan_ssh.model.panservice.ObjectBlock;
 import com.borjabares.pan_ssh.model.panservice.PanService;
 import com.borjabares.pan_ssh.model.user.User;
-import com.borjabares.pan_ssh.util.GlobalNames.Level;
 import com.borjabares.pan_ssh.util.Trimmer;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 
-@Action(value = "firstrun_save", results = {
-		@Result(type = "redirect", location = "/index"),
-		@Result(name = "input", location = "/firstrun") })
 @SuppressWarnings("serial")
 @Validations(requiredStrings = {
 		@RequiredStringValidator(fieldName = "confirmPassword", message = "Debe confirmar la contraseña.", key = "error.confpass.required", trim = true, shortCircuit = true) }
 )
-public class FirstRunAction extends ActionSupport implements ServletRequestAware{
+public class UserAction extends ActionSupport implements ServletRequestAware{
 	@Autowired
 	private PanService panService;
 	private User user;
+	private ObjectBlock<User> userBlock;
 	private HttpServletRequest request;
 	private String confirmPassword;
 
@@ -46,6 +47,14 @@ public class FirstRunAction extends ActionSupport implements ServletRequestAware
 		this.user = user;
 	}
 
+	public ObjectBlock<User> getUserBlock() {
+		return userBlock;
+	}
+
+	public void setUserBlock(ObjectBlock<User> userBlock) {
+		this.userBlock = userBlock;
+	}
+	
 	@Override
 	public void setServletRequest(HttpServletRequest request){
 		this.request = request;
@@ -58,12 +67,12 @@ public class FirstRunAction extends ActionSupport implements ServletRequestAware
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
-
-	@Override
-	public String execute() throws Exception{
-		if (panService.getNumberOfUsers()!=0){
-			return ERROR;
-		}
+	
+	@Action(value = "user_save", results = {
+			@Result(location = "/userSuccess"),
+			@Result(name = "input", location = "/userForm") })
+	public String save() throws Exception {
+		
 		if  (user.getLogin().equals(user.getPassword())){
 			addFieldError("user.password", getText("error.passlog.same"));
 			return INPUT;
@@ -73,16 +82,21 @@ public class FirstRunAction extends ActionSupport implements ServletRequestAware
 			addFieldError("confirmPassword", getText("error.confpass.diff"));
 			return INPUT;
 		}
-		
-		if (!confirmPassword.equals(Trimmer.trim(confirmPassword))){
-			addFieldError("user.password", getText("user.error.password.illegal"));
-			return INPUT;
+		if (user.getUserId() == 0) {
+			user.setIp(request.getRemoteAddr());
+			try{
+				panService.createUser(user);
+			} catch (DuplicatedUserLoginException e){
+				addFieldError("user.login",getText("error.login.duplicated"));
+				return INPUT;
+			} catch (DuplicatedUserEmailException e){
+				addFieldError("user.email",getText("error.email.duplicated"));
+				return INPUT;
+			}
+		} else {
+			panService.updateUser(user);
 		}
-		
-		user.setLevel(Level.GOD);
-		user.setIp(request.getRemoteAddr());
-		panService.createUser(user);
-		
+
 		return SUCCESS;
 	}
 
