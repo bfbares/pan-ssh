@@ -140,12 +140,35 @@ public class PanServiceTest {
 	}
 
 	@Test(expected = DuplicatedCategoryNameException.class)
-	public void createDuplicatedCategories() throws InstanceNotFoundException,
-			ParentCategoryException, DuplicatedCategoryNameException {
+	public void createDuplicatedCategories() throws Exception {
 		panService.createCategory(new Category("Actualidad", 0));
 		panService.createCategory(new Category("Actualidad", 0));
 	}
 
+	@Test
+	public void listParentCategories() throws Exception {
+		Category category1 = panService.createCategory(new Category("Actualidad", 0));
+		panService.createCategory(new Category("Novedades", category1.getCategoryId()));
+		panService.createCategory(new Category("Corazón", category1.getCategoryId()));
+		panService.createCategory(new Category("Deportes", 0));
+		
+		List<Category> categories = panService.listParentCategories();
+		
+		assertEquals(categories.size(),2);
+	}
+	
+	@Test
+	public void listCategoryChildrens() throws Exception {
+		Category category1 = panService.createCategory(new Category("Actualidad", 0));
+		panService.createCategory(new Category("Novedades", category1.getCategoryId()));
+		panService.createCategory(new Category("Corazón", category1.getCategoryId()));
+		panService.createCategory(new Category("Deportes", 0));
+		
+		List<Category> childrens  = panService.listCategoryChildrens(category1.getCategoryId());
+		
+		assertEquals(childrens.size(),2);
+	}
+	
 	@Test
 	public void createAndFindLink() throws Exception {
 		User user = panService.createUser(new User("Borja", "Borja",
@@ -237,7 +260,7 @@ public class PanServiceTest {
 		panService.createReport(report);
 		panService.createReport(new Report(link3, user, "Enlace duplicado"));
 		ObjectBlock<Report> reports = panService.listPendingReports(0, 10);
-		assertEquals(reports.getPageNum(), 1);
+		assertEquals(reports.getPagination().getPageNum(), 1);
 		assertEquals(reports.getList().size(),2);
 	}
 

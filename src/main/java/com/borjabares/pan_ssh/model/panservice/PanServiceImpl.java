@@ -1,6 +1,7 @@
 package com.borjabares.pan_ssh.model.panservice;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,7 +67,12 @@ public class PanServiceImpl implements PanService {
 	}
 
 	@Override
-	public void updateUser(User user) throws InstanceNotFoundException,
+	public void updateUser(User user) throws InstanceNotFoundException {
+		userDao.save(user);
+	}
+
+	@Override
+	public void updateUserAndPass(User user) throws InstanceNotFoundException,
 			NoSuchAlgorithmException {
 		user.setPassword(PasswordCodificator.codify(user.getPassword()));
 		userDao.save(user);
@@ -87,15 +93,7 @@ public class PanServiceImpl implements PanService {
 	@Transactional(readOnly = true)
 	public ObjectBlock<User> listAllUsers(int startIndex, int count) {
 		return new ObjectBlock<User>(userDao.listUsers(startIndex, count),
-				count, userDao.getNumberOfUsers());
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public ObjectBlock<User> listAllUsersSortedBy(int startIndex, int count,
-			String criteria, boolean asc) {
-		return new ObjectBlock<User>(userDao.listUsersSorted(startIndex, count,
-				criteria, asc), count, userDao.getNumberOfUsers());
+				startIndex, count, userDao.getNumberOfUsers());
 	}
 
 	@Override
@@ -103,7 +101,7 @@ public class PanServiceImpl implements PanService {
 	public ObjectBlock<User> listUsersByLevel(int startIndex, int count,
 			Level level) {
 		return new ObjectBlock<User>(userDao.listUsersOfLevel(startIndex,
-				count, level), count, userDao.getNumberOfUsers());
+				count, level), startIndex, count, userDao.getNumberOfUsers());
 	}
 
 	@Override
@@ -160,7 +158,7 @@ public class PanServiceImpl implements PanService {
 	@Transactional(readOnly = true)
 	public ObjectBlock<Links> listLinks(int startIndex, int count) {
 		return new ObjectBlock<Links>(linksDao.listLinks(startIndex, count),
-				count, linksDao.getNumberOfLinks());
+				startIndex, count, linksDao.getNumberOfLinks());
 	}
 
 	@Override
@@ -168,7 +166,7 @@ public class PanServiceImpl implements PanService {
 	public ObjectBlock<Links> listLinksByUserId(int startIndex, int count,
 			long userId) {
 		return new ObjectBlock<Links>(linksDao.getLinksByUserId(startIndex,
-				count, userId), count,
+				count, userId), startIndex, count,
 				linksDao.getNumberOfLinksByUserId(userId));
 	}
 
@@ -177,7 +175,7 @@ public class PanServiceImpl implements PanService {
 	public ObjectBlock<Links> listLinksByStatus(int startIndex, int count,
 			LinkStatus status) {
 		return new ObjectBlock<Links>(linksDao.getLinksByStatus(startIndex,
-				count, status), count,
+				count, status), startIndex, count,
 				linksDao.getNumberOfLinksByStatus(status));
 	}
 
@@ -225,6 +223,24 @@ public class PanServiceImpl implements PanService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
+	public List<Category> listParentCategories(){
+		return categoryDao.listParentCategories();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Category> listAllCategories(){
+		return categoryDao.listAllCategories();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Category> listCategoryChildrens(long parentId){
+		return categoryDao.listCategoryChildrens(parentId);
+	}
+	
+	@Override
 	@Transactional
 	public Report createReport(Report report)
 			throws LinkAlreadyReportedException {
@@ -247,7 +263,8 @@ public class PanServiceImpl implements PanService {
 	@Transactional(readOnly = true)
 	public ObjectBlock<Report> listPendingReports(int startIndex, int count) {
 		return new ObjectBlock<Report>(reportDao.getPendingReports(startIndex,
-				count), count, reportDao.getNumberOfPendingReports());
+				count), startIndex, count,
+				reportDao.getNumberOfPendingReports());
 	}
 
 	@Override

@@ -10,7 +10,7 @@
 		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
 		<init-param>
 			<param-name>struts.convention.action.packages</param-name>
-			<param-value>com.borjabares.pan_ssh.web</param-value>
+			<param-value>com.borjabares.pan_ssh.web.action</param-value>
 		</init-param>
 	</filter>
 

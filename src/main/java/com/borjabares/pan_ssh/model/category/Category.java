@@ -5,14 +5,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Version;
+
+import com.borjabares.pan_ssh.util.Trimmer;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.Validations;
 
 @Entity
+@Validations(
+		requiredFields ={
+		@RequiredFieldValidator(fieldName = "parent", message = "Debe introducir una categoría padre.", key="error.parent.required")},
+		requiredStrings = {
+		@RequiredStringValidator(fieldName = "name", message = "Debe proporcionar un nombre para la categoría.", key = "error.name.required", trim = true, shortCircuit = true)}, 
+		stringLengthFields = {
+		@StringLengthFieldValidator(fieldName = "name", minLength = "4", maxLength = "15", trim = true, message = "El nombre de la categoría debe tener entre ${minLength} y ${maxLength} caracteres.", key = "error.name.length")}
+)
 public class Category {
 	private long categoryId;
 	private String name;
 	private long parent;
-	private long version;
 
 	public Category() {
 	}
@@ -38,7 +50,7 @@ public class Category {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = Trimmer.trim(name);
 	}
 
 	public long getParent() {
@@ -49,18 +61,9 @@ public class Category {
 		this.parent = parent;
 	}
 
-	@Version
-	public long getVersion() {
-		return version;
-	}
-
-	public void setVersion(long version) {
-		this.version = version;
-	}
-
 	@Override
 	public String toString() {
 		return "Category [\ncategoryId=" + categoryId + ", \nname=" + name
-				+ ", \nparent=" + parent + ", \nversion=" + version + "]";
+				+ ", \nparent=" + parent + "]";
 	}
 }

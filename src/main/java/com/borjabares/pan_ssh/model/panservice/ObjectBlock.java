@@ -4,23 +4,19 @@ import java.util.List;
 
 public class ObjectBlock<O> {
 	private List<O> list;
-	private int pageNum;
+	private Pagination pagination;
 
-	public ObjectBlock(List<O> list, int count, int total) {
-		int pageNum; 
-		pageNum = total/count;
-		if (total%count!=0){
-			pageNum++;
-		}
+	public ObjectBlock(List<O> list,int startIndex, int count, int total) {
 		this.list = list;
-		this.pageNum = pageNum;
+		this.pagination = new Pagination(startIndex, count, total);
 	}
 
 	public List<O> getList() {
 		return list;
 	}
 
-	public int getPageNum() {
-		return pageNum;
+	public Pagination getPagination() {
+		return pagination;
 	}
+
 }

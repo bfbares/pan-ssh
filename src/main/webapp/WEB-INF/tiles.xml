@@ -9,23 +9,57 @@
         <put-attribute name="menu" value="/jsp/menu.jsp" />
         <put-attribute name="usermenu" value="/jsp/usermenu.jsp" />
         <put-attribute name="body" value="" />
+        <put-attribute name="pagination" value="" />
         <put-attribute name="footer" value="/jsp/footer.jsp" />
     </definition>
     
-    <definition name="/index" extends="baseLayout">
-        <put-attribute name="body" value="/jsp/frontpage.jsp" />
+    <definition name="/categoryDelSuccess" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/categoryDelSuccess.jsp" />
     </definition>
     
-    <definition name="/firstrun" extends="baseLayout">
-        <put-attribute name="body" value="/jsp/firstrunform.jsp" />
+    <definition name="/categoryForm" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/categoryForm.jsp" />
+    </definition>
+    
+    <definition name="/categoryList" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/categoryList.jsp" />
+    </definition>
+    
+    <definition name="/categorySuccess" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/categorySuccess.jsp" />
     </definition>
     
     <definition name="/error" extends="baseLayout">
         <put-attribute name="body" value="/jsp/error.jsp" />
     </definition>
     
+    <definition name="/firstrun" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/firstrunform.jsp" />
+    </definition>
+    
+    <definition name="/index" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/frontpage.jsp" />
+    </definition>
+    
+    <definition name="/loginForm" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/loginForm.jsp" />
+    </definition>
+    
     <definition name="/userForm" extends="baseLayout">
         <put-attribute name="body" value="/jsp/userForm.jsp" />
+    </definition>
+    
+    <definition name="/userEdit" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/userEdit.jsp" />
+    </definition>
+    
+    <definition name="/userEditSuccess" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/userEditSuccess.jsp" />
+    </definition>
+    
+    <definition name="/userList" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/userList.jsp" />
+        <put-attribute name="pagination" value="/jsp/pagination.jsp" />
     </definition>
     
     <definition name="/userSuccess" extends="baseLayout">

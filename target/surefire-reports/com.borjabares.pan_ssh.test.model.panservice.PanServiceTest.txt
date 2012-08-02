@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.borjabares.pan_ssh.test.model.panservice.PanServiceTest
 -------------------------------------------------------------------------------
-Tests run: 26, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.379 sec
+Tests run: 28, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.567 sec

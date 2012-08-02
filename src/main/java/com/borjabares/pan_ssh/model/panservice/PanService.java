@@ -1,6 +1,7 @@
 package com.borjabares.pan_ssh.model.panservice;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import com.borjabares.modelutil.exceptions.InstanceNotFoundException;
 import com.borjabares.pan_ssh.exceptions.DuplicatedCategoryNameException;
@@ -24,17 +25,16 @@ public interface PanService {
 	public User createUser(User user) throws NoSuchAlgorithmException,
 			DuplicatedUserLoginException, DuplicatedUserEmailException;
 
-	public void updateUser(User user) throws InstanceNotFoundException,
-			NoSuchAlgorithmException;
+	public void updateUser(User user) throws InstanceNotFoundException;
+	
+	public void updateUserAndPass(User user) throws InstanceNotFoundException,
+	NoSuchAlgorithmException;
 
 	public void deleteUser(long userId) throws InstanceNotFoundException;
 
 	public User findUser(long userId) throws InstanceNotFoundException;
 
 	public ObjectBlock<User> listAllUsers(int startIndex, int count);
-
-	public ObjectBlock<User> listAllUsersSortedBy(int startIndex, int count,
-			String criteria, boolean asc);
 
 	public ObjectBlock<User> listUsersByLevel(int startIndex, int count, Level level);
 
@@ -69,6 +69,12 @@ public interface PanService {
 
 	public Category findCategory(long categoryId)
 			throws InstanceNotFoundException;
+	
+	public List<Category> listParentCategories();
+	
+	public List<Category> listAllCategories();
+	
+	public List<Category> listCategoryChildrens(long parentId);
 
 	public Report createReport(Report report) throws LinkAlreadyReportedException;
 	

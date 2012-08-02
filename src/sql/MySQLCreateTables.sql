@@ -52,7 +52,6 @@ CREATE TABLE Category (
     categoryId BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(64) NOT NULL,
     parent BIGINT NOT NULL DEFAULT 0,
-    version BIGINT,
     UNIQUE (name),
     CONSTRAINT CategoryPK PRIMARY KEY(categoryId)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -97,7 +96,6 @@ CREATE TABLE Report (
     submited TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     reason TEXT NOT NULL,
     status enum('PENDING', 'CHECKED') CHARACTER SET utf8 NOT NULL DEFAULT 'PENDING',
-    version BIGINT,
     UNIQUE(linkId),
     CONSTRAINT ReportPK PRIMARY KEY(reportId),
     CONSTRAINT ReportLinkFK FOREIGN KEY(linkId)

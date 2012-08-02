@@ -9,8 +9,6 @@ public interface UserDao extends GenericDao<User, Long>{
 	
 	public List <User> listUsers(int startIndex, int count);
 	
-	public List<User> listUsersSorted(int startIndex, int count, String criteria, boolean asc);
-	
 	public List <User> listUsersOfLevel(int startIndex, int count, Level level);
 	
 	public int getNumberOfUsers();

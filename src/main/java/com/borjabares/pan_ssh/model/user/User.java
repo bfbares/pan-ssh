@@ -18,6 +18,7 @@ import com.borjabares.pan_ssh.util.Trimmer;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
+import com.opensymphony.xwork2.validator.annotations.UrlValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 
 @Entity
@@ -29,7 +30,8 @@ import com.opensymphony.xwork2.validator.annotations.Validations;
 		@StringLengthFieldValidator(fieldName = "login", minLength = "4", maxLength = "15", trim = true, message = "El nombre de usuario debe tener entre ${minLength} y ${maxLength} caracteres.", key = "error.login.length"),
 		@StringLengthFieldValidator(fieldName = "password", minLength = "6", maxLength = "15", trim = true, message = "La contraseña debe tener entre ${minLength} y ${maxLength} caracteres.", key = "error.password.length") }, 
 		emails = { 
-		@EmailValidator(fieldName = "email", message = "Debe introducir un correo electrónico válido.", key = "error.email.validator") }
+		@EmailValidator(fieldName = "email", message = "Debe introducir un correo electrónico válido.", key = "error.email.validator") },
+		urls = { @UrlValidator(fieldName = "url", message = "Debe introducir una url válida.", key = "error.url.validator")}
 )
 public class User {
 
@@ -191,6 +193,10 @@ public class User {
 				+ ", \nlevel=" + level + ", \nlang=" + lang + ", \nurl=" + url
 				+ ", \nemail=" + email + ", \nip=" + ip + ", \nversion="
 				+ version + "]";
+	}
+
+	public String toCookie(){
+		return login + " " + password;
 	}
 
 }

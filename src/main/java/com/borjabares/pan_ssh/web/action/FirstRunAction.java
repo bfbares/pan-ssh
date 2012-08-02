@@ -1,4 +1,4 @@
-package com.borjabares.pan_ssh.web;
+package com.borjabares.pan_ssh.web.action;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;

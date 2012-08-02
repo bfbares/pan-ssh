@@ -21,23 +21,6 @@ public class UserDaoHibernate extends GenericDaoHibernate<User, Long> implements
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<User> listUsersSorted(int startIndex, int count,
-			String criteria, boolean asc) {
-		if (asc) {
-			return getSession()
-					.createQuery("SELECT u FROM User u ORDER BY :criteria")
-					.setParameter("criteria", criteria)
-					.setFirstResult(startIndex).setMaxResults(count).list();
-		} else {
-			return getSession()
-					.createQuery("SELECT u FROM User u ORDER BY :criteria DESC")
-					.setParameter("criteria", criteria)
-					.setFirstResult(startIndex).setMaxResults(count).list();
-		}
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
 	public List<User> listUsersOfLevel(int startIndex, int count, Level level) {
 		return getSession()
 				.createQuery(

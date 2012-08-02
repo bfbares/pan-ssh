@@ -20,7 +20,7 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <a class="brand" href="/menu"><s:text name="pan.title"/></a>
+          <a class="brand" href="/index"><s:text name="pan.title"/></a>
           <tiles:insertAttribute name="menu" />
           <tiles:insertAttribute name="usermenu" />
         </div>
@@ -28,6 +28,7 @@
     </div><!-- End NavBar -->
     <div class="container content">
       <tiles:insertAttribute name="body" />
+      <tiles:insertAttribute name="pagination" />
     </div><!-- End Container -->
     <div class="container-fluid upline">
 	    <div class="container footer">

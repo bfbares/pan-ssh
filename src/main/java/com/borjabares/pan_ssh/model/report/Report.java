@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Version;
 
 import org.hibernate.annotations.Type;
 
@@ -31,7 +30,6 @@ public class Report {
 	private Calendar submited;
 	private String reason;
 	private ReportStatus status;
-	private long version;
 
 	public Report() {
 	}
@@ -100,15 +98,6 @@ public class Report {
 
 	public void setStatus(ReportStatus status) {
 		this.status = status;
-	}
-
-	@Version
-	public long getVersion() {
-		return version;
-	}
-
-	public void setVersion(long version) {
-		this.version = version;
 	}
 
 }
