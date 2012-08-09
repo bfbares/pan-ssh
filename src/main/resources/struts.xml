@@ -36,16 +36,28 @@
 		<!-- <global-exception-mappings> <exception-mapping exception="java.lang.Exception" 
 			result="error" /> </global-exception-mappings> -->
 
+		<action name="discarded" >
+		    <result type="redirect">/discarded/</result>
+		</action>
+
 		<action name="firstrun">
 			<result>/firstrun</result>
 		</action>
+		
+		<action name="index" >
+		    <result type="redirect">/index/</result>
+		</action>
 
-		<action name="index">
-			<result>/index</result>
+		<action name="ipVoted">
+			<result>/ipVoted</result>
 		</action>
 
 		<action name="loginForm">
 			<result>/loginForm</result>
+		</action>
+		
+		<action name="queue" >
+		    <result type="redirect">/queue/</result>
 		</action>
 
 		<action name="register">
@@ -58,7 +70,7 @@
 
 	</package>
 
-	<package name="user" namespace="/user" extends="default">
+	<package name="user" namespace="/registered" extends="default">
 
 		<interceptors>
 			<interceptor name="authenticationInterceptor"
@@ -83,6 +95,10 @@
 			<result>/userEditSuccess</result>
 		</action>
 		
+		<action name="reportForm">
+			<result>/reportForm</result>
+		</action>
+		
 	</package>
 	
 	<package name="secure" namespace="/secure" extends="default">
@@ -103,6 +119,22 @@
 		</interceptors>
 		
 		<default-interceptor-ref name="secureStack" />
+		
+		<action name="banned" >
+		    <result type="redirect">/banned/</result>
+		</action>
+		
+		<action name="report_list" >
+		    <result type="redirect">/report_list/</result>
+		</action>
+		
+		<action name="user_list" >
+		    <result type="redirect">/user_list/login/</result>
+		</action>
+		
+		<action name="user_list/" >
+		    <result type="redirect">/user_list/login/</result>
+		</action>
 
 	</package>
 	

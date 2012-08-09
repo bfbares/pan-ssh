@@ -20,15 +20,30 @@ import org.hibernate.annotations.Type;
 
 import com.borjabares.pan_ssh.model.category.Category;
 import com.borjabares.pan_ssh.model.user.User;
+import com.borjabares.pan_ssh.util.FriendlyTitleGenerator;
 import com.borjabares.pan_ssh.util.GlobalNames.LinkStatus;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.UrlValidator;
+import com.opensymphony.xwork2.validator.annotations.Validations;
 
 @Entity
+@Validations(requiredStrings = {
+		@RequiredStringValidator(fieldName = "url", message = "Debe proporcionar un enlace.", key = "error.url.required", trim = true, shortCircuit = true),
+		@RequiredStringValidator(fieldName = "title", message = "Debe proporcionar un título para la noticia.", key = "error.title.required", shortCircuit = true),
+		@RequiredStringValidator(fieldName = "description", message = "Debe proporcionar una descripción.", key = "error.description.required", trim = true, shortCircuit = true) }, 
+		stringLengthFields = {
+		@StringLengthFieldValidator(fieldName = "title", minLength = "4", maxLength = "120", trim = true, message = "El título debe tener entre ${minLength} y ${maxLength} caracteres.", key = "error.title.length"),
+		@StringLengthFieldValidator(fieldName = "description", minLength = "6", maxLength = "360", trim = true, message = "La descripción debe tener entre ${minLength} y ${maxLength} caracteres.", key = "error.description.length") }, 
+		urls = { @UrlValidator(fieldName = "url", message = "Debe introducir una url válida.", key = "error.url.validator")}
+)
 public class Links {
 	private long linkId;
 	private User linkAuthor;
 	private Category categoryId;
 	private String url;
 	private String title;
+	private String ftitle;
 	private String description;
 	private Calendar submited;
 	private Calendar published;
@@ -38,13 +53,18 @@ public class Links {
 	private long version;
 
 	public Links(){
+		this.submited = Calendar.getInstance();
+		this.karma = 0.0F;
+		this.status = LinkStatus.QUEUED;
 	}
 
-	public Links(String url, String title, String description, String tags, Category category) {
+	public Links(String url, String title, String description, String tags, User user, Category category) {
 		this.url = url;
 		this.title = title;
+		this.ftitle = FriendlyTitleGenerator.generate(title);
 		this.description = description;
 		this.tags = tags;
+		this.linkAuthor = user;
 		this.categoryId=category;
 		this.submited = Calendar.getInstance();
 		this.karma = 0.0F;
@@ -90,13 +110,20 @@ public class Links {
 		this.url = url;
 	}
 
-	@Type(type="text")
 	public String getTitle() {
 		return title;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getFtitle() {
+		return ftitle;
+	}
+
+	public void setFtitle(String ftitle) {
+		this.ftitle = ftitle;
 	}
 
 	@Type(type="text")
@@ -132,6 +159,10 @@ public class Links {
 
 	public void setKarma(float karma) {
 		this.karma = karma;
+	}
+	
+	public void addKarma(float karma) {
+		this.karma += karma;
 	}
 
 	@Type(type="text")

@@ -30,7 +30,7 @@ public class Pagination {
 			for (int i=2;i<pageNum&&i<=11;i++){
 				pageList.add(i);
 			}
-			if (pageNum <10){
+			if (pageNum <=11){
 				endEllipsis = false;
 			}
 		} else {

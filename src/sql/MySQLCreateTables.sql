@@ -65,15 +65,17 @@ CREATE TABLE Links (
     linkAuthor BIGINT NOT NULL,
     categoryId BIGINT NOT NULL,
     url VARCHAR(128) NOT NULL,
-    title TEXT NOT NULL,
+    title VARCHAR(128) NOT NULL,
+    ftitle VARCHAR(128) NOT NULL,
     description TEXT,
     submited TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     published TIMESTAMP,
     karma DECIMAL(10,2) NOT NULL DEFAULT '0.0',
     tags TEXT,
-    status enum('PUBLISHED', 'DISCARD', 'QUEUED') CHARACTER SET utf8 NOT NULL DEFAULT 'QUEUED',
+    status enum('PUBLISHED', 'DISCARD', 'QUEUED', 'BANNED') CHARACTER SET utf8 NOT NULL DEFAULT 'QUEUED',
     version BIGINT, 
     UNIQUE (url),
+    UNIQUE (ftitle),
     CONSTRAINT LinksPK PRIMARY KEY(linkId),
     CONSTRAINT LinkUserIdFK FOREIGN KEY(linkAuthor)
         REFERENCES User (userId),
@@ -86,6 +88,7 @@ CREATE TABLE Links (
 CREATE INDEX LinksIndexByLinkId ON Links (linkId);
 CREATE INDEX LinksIndexByKarma ON Links (karma);
 CREATE INDEX LinksIndexByStatus ON Links (status);
+CREATE INDEX LinksIndexByFtitle ON Links (ftitle);
 
 -- -------------------------------- Report -----------------------------------
 

@@ -9,6 +9,10 @@ public interface LinksDao extends GenericDao<Links, Long> {
 	
 	public boolean existsUrl(String url);
 	
+	public boolean existsFtitle(String ftitle);
+	
+	public Links findLinkByFtitle(String ftitle);
+	
 	public List<Links> listLinks(int startIndex, int count);
 	
 	public List<Links> getLinksByUserId(int startIndex, int count, long userId);

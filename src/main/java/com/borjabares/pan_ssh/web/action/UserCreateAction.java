@@ -87,7 +87,7 @@ public class UserCreateAction extends ActionSupport implements ServletRequestAwa
 		try{
 			panService.createUser(user);
 			session.put(GlobalNames.USER, user);
-//			for (int i=0; i<=100; i++){
+//			for (int i=0; i<=250; i++){
 //				user = new User("Paco"+i,"1234567","paco"+i+"@gmail.com","192.168.1."+i);
 //				panService.createUser(user);
 //			}

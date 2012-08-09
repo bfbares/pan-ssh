@@ -25,6 +25,25 @@ public class LinksDaoHibernate extends GenericDaoHibernate<Links, Long>
 	}
 
 	@Override
+	public boolean existsFtitle(String ftitle) {
+		Links link = (Links) getSession()
+				.createQuery("SELECT l FROM Links l WHERE l.ftitle = :ftitle")
+				.setParameter("ftitle", ftitle).uniqueResult();
+
+		if (link != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public Links findLinkByFtitle(String ftitle) {
+		return (Links) getSession()
+				.createQuery("SELECT l FROM Links l WHERE l.ftitle = :ftitle")
+				.setParameter("ftitle", ftitle).uniqueResult();
+	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Links> listLinks(int startIndex, int count) {
 		return getSession()
@@ -73,8 +92,9 @@ public class LinksDaoHibernate extends GenericDaoHibernate<Links, Long>
 
 	@Override
 	public int getNumberOfLinksByStatus(LinkStatus status) {
-		long numberofLinks = (Long) getSession().createQuery(
-				"SELECT COUNT(l) FROM Links l WHERE l.status = :status")
+		long numberofLinks = (Long) getSession()
+				.createQuery(
+						"SELECT COUNT(l) FROM Links l WHERE l.status = :status")
 				.setParameter("status", status).uniqueResult();
 
 		return (int) numberofLinks;

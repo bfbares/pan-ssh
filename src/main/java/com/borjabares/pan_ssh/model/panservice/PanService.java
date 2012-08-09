@@ -13,6 +13,7 @@ import com.borjabares.pan_ssh.exceptions.LinkAlreadyReportedException;
 import com.borjabares.pan_ssh.exceptions.ParentCategoryException;
 import com.borjabares.pan_ssh.exceptions.UserVotedException;
 import com.borjabares.pan_ssh.model.category.Category;
+import com.borjabares.pan_ssh.model.links.FullLink;
 import com.borjabares.pan_ssh.model.links.Links;
 import com.borjabares.pan_ssh.model.linkvote.LinkVote;
 import com.borjabares.pan_ssh.model.report.Report;
@@ -26,17 +27,23 @@ public interface PanService {
 			DuplicatedUserLoginException, DuplicatedUserEmailException;
 
 	public void updateUser(User user) throws InstanceNotFoundException;
-	
+
 	public void updateUserAndPass(User user) throws InstanceNotFoundException,
-	NoSuchAlgorithmException;
+			NoSuchAlgorithmException;
 
 	public void deleteUser(long userId) throws InstanceNotFoundException;
 
 	public User findUser(long userId) throws InstanceNotFoundException;
 
+	public User findUserByLogin(String login);
+
 	public ObjectBlock<User> listAllUsers(int startIndex, int count);
 
-	public ObjectBlock<User> listUsersByLevel(int startIndex, int count, Level level);
+	public ObjectBlock<User> listUsersByCriteria(int startIndex, int count,
+			String criteria);
+
+	public ObjectBlock<User> listUsersByLevel(int startIndex, int count,
+			Level level);
 
 	public int getNumberOfUsers();
 
@@ -44,20 +51,30 @@ public interface PanService {
 
 	public boolean userExists(String login);
 
-	public Links createLink(long userId, Links link)
-			throws InstanceNotFoundException, DuplicatedLinkException;
+	public Links createLink(Links link) throws DuplicatedLinkException;
 
 	public void updateLink(Links link) throws InstanceNotFoundException;
 
 	public void deleteLink(long linkId) throws InstanceNotFoundException;
 
 	public Links findLink(long linkId) throws InstanceNotFoundException;
-	
+
+	public FullLink findFullLink(long linkId, User user, String ip)
+			throws InstanceNotFoundException;
+
+	public FullLink findFullLinkByFtitle(String ftitle, User user, String ip)
+			throws InstanceNotFoundException;
+
 	public ObjectBlock<Links> listLinks(int startIndex, int count);
-	
-	public ObjectBlock<Links> listLinksByUserId(int startIndex, int count, long userId);
-	
-	public ObjectBlock<Links> listLinksByStatus(int startIndex, int count, LinkStatus status);
+
+	public ObjectBlock<Links> listLinksByUserId(int startIndex, int count,
+			long userId);
+
+	public ObjectBlock<Links> listLinksByStatus(int startIndex, int count,
+			LinkStatus status);
+
+	public ObjectBlock<FullLink> listFullLinksByStatus(int startIndex,
+			int count, LinkStatus status, User user, String ip);
 
 	public Category createCategory(Category category)
 			throws ParentCategoryException, DuplicatedCategoryNameException;
@@ -69,25 +86,29 @@ public interface PanService {
 
 	public Category findCategory(long categoryId)
 			throws InstanceNotFoundException;
-	
+
 	public List<Category> listParentCategories();
-	
+
+	public List<Category> listNonParentCategories();
+
 	public List<Category> listAllCategories();
-	
+
 	public List<Category> listCategoryChildrens(long parentId);
 
-	public Report createReport(Report report) throws LinkAlreadyReportedException;
-	
+	public Report createReport(Report report)
+			throws LinkAlreadyReportedException;
+
 	public void updateReport(Report report);
-	
+
 	public ObjectBlock<Report> listPendingReports(int startIndex, int count);
-	
+
 	public void deleteReport(long reportId) throws InstanceNotFoundException;
-	
+
 	public Report findReport(long reportId) throws InstanceNotFoundException;
-	
-	public LinkVote createVote(LinkVote vote) throws IpVotedException, UserVotedException;
-	
+
+	public LinkVote createVote(LinkVote vote) throws IpVotedException,
+			UserVotedException;
+
 	public LinkVote findVote(long voteId) throws InstanceNotFoundException;
 
 }

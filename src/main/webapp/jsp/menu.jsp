@@ -1,7 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <ul class="nav">
-	<li><a href="/index"><s:text name="section.frontpage"/></a></li>
+	<li><a href="/index/"><s:text name="section.frontpage"/></a></li>
+	<li><a href="/queue/"><s:text name="section.queue"/></a></li>
+	<li><a href="/discarded/"><s:text name="section.discarded"/></a></li>
+	<s:if test="#session['user'] != null">
+		<li><a href="/linkForm"><s:text name="section.linkform"/></a></li>
+	</s:if>
 	<s:if test="%{(#session['user'].level.toString() == \"ADMIN\") || 
 	              (#session['user'].level.toString() == \"GOD\")}">
 		<li class="dropdown">
@@ -12,7 +17,9 @@
 			      <b class="caret"></b>
 			</a>
 			<ul class="dropdown-menu">
-			  <li><a href="/secure/user_list"><s:text name="section.listall"/></a></li>
+			  <li><a href="/user_list/login/"><s:text name="section.listall"/></a></li>
+			  <li><a href="/report_list/"><s:text name="section.report.pending"/></a></li>
+			  <li><a href="/banned/"><s:text name="section.banned"/></a></li>
 			</ul>
 		</li>
   	</s:if>

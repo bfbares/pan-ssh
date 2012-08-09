@@ -8,4 +8,6 @@ public interface LinkVoteDao extends GenericDao<LinkVote, Long>{
 	
 	public boolean ipVoted(String ip, long linkId);
 	
+	public long getNumberOfVotes(long linkId);
+	
 }

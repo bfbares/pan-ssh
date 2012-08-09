@@ -31,6 +31,13 @@ public class CategoryDaoHibernate extends GenericDaoHibernate<Category, Long>
 	}
 
 	@SuppressWarnings("unchecked")
+	public List<Category> listNonParentCategories() {
+		return getSession().createQuery(
+				"SELECT c FROM Category c WHERE c.parent != 0 ORDER BY c.name")
+				.list();
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<Category> listAllCategories() {
 		return getSession().createQuery(
 				"SELECT c FROM Category c ORDER BY c.categoryId").list();

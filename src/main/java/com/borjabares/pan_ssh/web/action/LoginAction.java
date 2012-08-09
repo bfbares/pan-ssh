@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.borjabares.pan_ssh.model.panservice.PanService;
 import com.borjabares.pan_ssh.model.user.User;
 import com.borjabares.pan_ssh.util.GlobalNames;
+import com.borjabares.pan_ssh.util.GlobalNames.Level;
 import com.borjabares.pan_ssh.util.PasswordCodificator;
 import com.borjabares.pan_ssh.util.Trimmer;
 import com.opensymphony.xwork2.ActionSupport;
@@ -24,7 +25,7 @@ import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 
 @Action(value = "login", results = {
-		@Result(type = "redirect", location = "/index"),
+		@Result(type = "redirect", location = "/index/"),
 		@Result(name = "input", location = "/loginForm") })
 @SuppressWarnings("serial")
 @Validations(requiredStrings = {
@@ -104,6 +105,13 @@ public class LoginAction extends ActionSupport implements ServletRequestAware,
 		}
 
 		user = panService.findUser(id);
+		
+		if (user.getLevel() == Level.DISABLED || 
+			user.getLevel() == Level.AUTODISABLED){
+			addActionError(getText("error.login.disabled"));
+			return INPUT;
+		}
+		
 		user.setLastlogin(Calendar.getInstance());
 		user.setIp(request.getRemoteAddr());
 		panService.updateUser(user);

@@ -36,7 +36,7 @@ public class ReportDaoHibernate extends GenericDaoHibernate<Report, Long>
 				.createQuery("SELECT r FROM Report r WHERE r.link.linkId = :linkId")
 				.setParameter("linkId", linkId).uniqueResult();
 
-		if (report != null) {
+		if (report != null && report.getStatus() == ReportStatus.PENDING) {
 			return true;
 		}
 

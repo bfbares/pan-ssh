@@ -147,37 +147,69 @@ public class PanServiceTest {
 
 	@Test
 	public void listParentCategories() throws Exception {
-		Category category1 = panService.createCategory(new Category("Actualidad", 0));
-		panService.createCategory(new Category("Novedades", category1.getCategoryId()));
-		panService.createCategory(new Category("Corazón", category1.getCategoryId()));
+		Category category1 = panService.createCategory(new Category(
+				"Actualidad", 0));
+		panService.createCategory(new Category("Novedades", category1
+				.getCategoryId()));
+		panService.createCategory(new Category("Corazón", category1
+				.getCategoryId()));
 		panService.createCategory(new Category("Deportes", 0));
-		
+
 		List<Category> categories = panService.listParentCategories();
-		
-		assertEquals(categories.size(),2);
+
+		assertEquals(categories.size(), 2);
 	}
-	
+
+	@Test
+	public void listNonParentCategories() throws Exception {
+		Category category1 = panService.createCategory(new Category(
+				"Actualidad", 0));
+		panService.createCategory(new Category("Novedades", category1
+				.getCategoryId()));
+		panService.createCategory(new Category("Corazón", category1
+				.getCategoryId()));
+		Category category2 = panService.createCategory(new Category("Deportes",
+				0));
+		panService.createCategory(new Category("Formula 1", category2
+				.getCategoryId()));
+		panService.createCategory(new Category("Fútbol", category2
+				.getCategoryId()));
+
+		List<Category> categories = panService.listNonParentCategories();
+
+		assertEquals(categories.size(), 4);
+	}
+
 	@Test
 	public void listCategoryChildrens() throws Exception {
-		Category category1 = panService.createCategory(new Category("Actualidad", 0));
-		panService.createCategory(new Category("Novedades", category1.getCategoryId()));
-		panService.createCategory(new Category("Corazón", category1.getCategoryId()));
-		panService.createCategory(new Category("Deportes", 0));
-		
-		List<Category> childrens  = panService.listCategoryChildrens(category1.getCategoryId());
-		
-		assertEquals(childrens.size(),2);
+		Category category1 = panService.createCategory(new Category(
+				"Actualidad", 0));
+		panService.createCategory(new Category("Novedades", category1
+				.getCategoryId()));
+		panService.createCategory(new Category("Corazón", category1
+				.getCategoryId()));
+		Category category2 = panService.createCategory(new Category("Deportes",
+				0));
+		panService.createCategory(new Category("Formula 1", category2
+				.getCategoryId()));
+		panService.createCategory(new Category("Fútbol", category2
+				.getCategoryId()));
+
+		List<Category> childrens = panService.listCategoryChildrens(category1
+				.getCategoryId());
+
+		assertEquals(childrens.size(), 2);
 	}
-	
+
 	@Test
 	public void createAndFindLink() throws Exception {
 		User user = panService.createUser(new User("Borja", "Borja",
 				"borja@gmail.com", "192.168.1.1"));
 		Category category = panService.createCategory(new Category(
 				"Actualidad", 0));
-		Links link1 = panService.createLink(user.getUserId(), new Links(
-				"http://www.google.es", "Google", "HomePage of Google",
-				"Google, search", category));
+		Links link1 = panService.createLink(new Links("http://www.google.es",
+				"Google", "HomePage of Google", "Google, search", user,
+				category));
 
 		Links link2 = panService.findLink(link1.getLinkId());
 		assertEquals(link1, link2);
@@ -194,12 +226,10 @@ public class PanServiceTest {
 				"borja@gmail.com", "192.168.1.1"));
 		Category category = panService.createCategory(new Category(
 				"Actualidad", 0));
-		panService.createLink(user.getUserId(), new Links(
-				"http://www.google.es", "Google", "HomePage of Google",
-				"Google, search", category));
-		panService.createLink(user.getUserId(), new Links(
-				"http://www.google.es", "Bing", "HomePage of Bing",
-				"Bing, search", category));
+		panService.createLink(new Links("http://www.google.es", "Google",
+				"HomePage of Google", "Google, search", user, category));
+		panService.createLink(new Links("http://www.google.es", "Bing",
+				"HomePage of Bing", "Bing, search", user, category));
 	}
 
 	@Test
@@ -208,9 +238,9 @@ public class PanServiceTest {
 				"borja@gmail.com", "192.168.1.1"));
 		Category category = panService.createCategory(new Category(
 				"Actualidad", 0));
-		Links link = panService.createLink(user.getUserId(), new Links(
-				"http://www.google.es", "Google", "HomePage of Google",
-				"Google, search", category));
+		Links link = panService.createLink(new Links("http://www.google.es",
+				"Google", "HomePage of Google", "Google, search", user,
+				category));
 		Report report1 = panService.createReport(new Report(link, user,
 				"Enlace duplicado"));
 
@@ -232,9 +262,9 @@ public class PanServiceTest {
 				"julia@gmail.com", "32.14.27.186"));
 		Category category = panService.createCategory(new Category(
 				"Actualidad", 0));
-		Links link = panService.createLink(user1.getUserId(), new Links(
-				"http://www.google.es", "Google", "HomePage of Google",
-				"Google, search", category));
+		Links link = panService.createLink(new Links("http://www.google.es",
+				"Google", "HomePage of Google", "Google, search", user1,
+				category));
 		panService.createReport(new Report(link, user1, "Enlace duplicado"));
 		panService.createReport(new Report(link, user2, "Enlace repetido"));
 	}
@@ -245,15 +275,14 @@ public class PanServiceTest {
 				"borja@gmail.com", "192.168.1.1"));
 		Category category = panService.createCategory(new Category(
 				"Actualidad", 0));
-		Links link1 = panService.createLink(user.getUserId(), new Links(
-				"http://www.google.es", "Google", "HomePage of Google",
-				"Google, search", category));
-		Links link2 = panService.createLink(user.getUserId(), new Links(
-				"http://www.yahoo.es", "Yahoo", "HomePage of Yahoo",
-				"Google, search", category));
-		Links link3 = panService.createLink(user.getUserId(), new Links(
-				"http://www.bing.es", "Bing", "HomePage of Bing",
-				"Bing, search", category));
+		Links link1 = panService.createLink(new Links("http://www.google.es",
+				"Google", "HomePage of Google", "Google, search", user,
+				category));
+		Links link2 = panService
+				.createLink(new Links("http://www.yahoo.es", "Yahoo",
+						"HomePage of Yahoo", "Google, search", user, category));
+		Links link3 = panService.createLink(new Links("http://www.bing.es",
+				"Bing", "HomePage of Bing", "Bing, search", user, category));
 		panService.createReport(new Report(link1, user, "Enlace duplicado"));
 		Report report = new Report(link2, user, "Enlace duplicado");
 		report.setStatus(ReportStatus.CHECKED);
@@ -261,7 +290,7 @@ public class PanServiceTest {
 		panService.createReport(new Report(link3, user, "Enlace duplicado"));
 		ObjectBlock<Report> reports = panService.listPendingReports(0, 10);
 		assertEquals(reports.getPagination().getPageNum(), 1);
-		assertEquals(reports.getList().size(),2);
+		assertEquals(reports.getList().size(), 2);
 	}
 
 	@Test
@@ -272,20 +301,18 @@ public class PanServiceTest {
 				"juan@gmail.com", "192.168.1.1"));
 		Category category = panService.createCategory(new Category(
 				"Actualidad", 0));
-		panService.createLink(user1.getUserId(), new Links(
-				"http://www.google.es", "Google", "HomePage of Google",
-				"Google, search", category));
-		panService.createLink(user1.getUserId(), new Links(
-				"http://www.yahoo.es", "Yahoo", "HomePage of Yahoo",
-				"Google, search", category));
-		panService.createLink(user2.getUserId(), new Links(
-				"http://www.bing.es", "Bing", "HomePage of Bing",
-				"Bing, search", category));
-		ObjectBlock<Links> links = panService.listLinksByUserId(0, 10, user1.getUserId());
-		
-		assertEquals(links.getList().size(),2);
+		panService.createLink(new Links("http://www.google.es", "Google",
+				"HomePage of Google", "Google, search", user1, category));
+		panService.createLink(new Links("http://www.yahoo.es", "Yahoo",
+				"HomePage of Yahoo", "Google, search", user1, category));
+		panService.createLink(new Links("http://www.bing.es", "Bing",
+				"HomePage of Bing", "Bing, search", user2, category));
+		ObjectBlock<Links> links = panService.listLinksByUserId(0, 10,
+				user1.getUserId());
+
+		assertEquals(links.getList().size(), 2);
 	}
-	
+
 	@Test
 	public void listLinksByStatus() throws Exception {
 		User user1 = panService.createUser(new User("Borja", "Borja",
@@ -294,83 +321,82 @@ public class PanServiceTest {
 				"juan@gmail.com", "192.168.1.1"));
 		Category category = panService.createCategory(new Category(
 				"Actualidad", 0));
-		Links link1 = new Links(
-				"http://www.google.es", "Google", "HomePage of Google",
-				"Google, search", category);
+		Links link1 = new Links("http://www.google.es", "Google",
+				"HomePage of Google", "Google, search", user1, category);
 		link1.setStatus(LinkStatus.PUBLISHED);
-		Links link2 = new Links(
-				"http://www.yahoo.es", "Yahoo", "HomePage of Yahoo",
-				"Google, search", category);
+		Links link2 = new Links("http://www.yahoo.es", "Yahoo",
+				"HomePage of Yahoo", "Google, search", user1, category);
 		link2.setStatus(LinkStatus.PUBLISHED);
-		panService.createLink(user1.getUserId(), link1);
-		panService.createLink(user1.getUserId(), link2);
-		panService.createLink(user2.getUserId(), new Links(
-				"http://www.bing.es", "Bing", "HomePage of Bing",
-				"Bing, search", category));
-		ObjectBlock<Links> links = panService.listLinksByStatus(0, 10, LinkStatus.PUBLISHED);
-		
-		assertEquals(links.getList().size(),2);
+		panService.createLink(link1);
+		panService.createLink(link2);
+		panService.createLink(new Links("http://www.bing.es", "Bing",
+				"HomePage of Bing", "Bing, search", user2, category));
+		ObjectBlock<Links> links = panService.listLinksByStatus(0, 10,
+				LinkStatus.PUBLISHED);
+
+		assertEquals(links.getList().size(), 2);
 	}
-	
+
 	@Test
 	public void createAndFindAnonymousVote() throws Exception {
 		User user = panService.createUser(new User("Borja", "Borja",
 				"borja@gmail.com", "192.168.1.1"));
 		Category category = panService.createCategory(new Category(
 				"Actualidad", 0));
-		Links link = panService.createLink(user.getUserId(), new Links(
-				"http://www.google.es", "Google", "HomePage of Google",
-				"Google, search", category));
-		LinkVote vote1 = panService.createVote(new LinkVote(link, VoteType.UPVOTE, "1.2.3.4"));
+		Links link = panService.createLink(new Links("http://www.google.es", "Google",
+				"HomePage of Google", "Google, search", user, category));
+		LinkVote vote1 = panService.createVote(new LinkVote(link,
+				VoteType.UPVOTE, "1.2.3.4"));
 		LinkVote vote2 = panService.findVote(vote1.getVoteId());
-		
+
 		assertEquals(vote1, vote2);
 	}
-	
+
 	@Test
 	public void createAndFindNonAnonymousVote() throws Exception {
 		User user = panService.createUser(new User("Borja", "Borja",
 				"borja@gmail.com", "192.168.1.1"));
 		Category category = panService.createCategory(new Category(
 				"Actualidad", 0));
-		Links link = panService.createLink(user.getUserId(), new Links(
-				"http://www.google.es", "Google", "HomePage of Google",
-				"Google, search", category));
-		LinkVote vote1 = panService.createVote(new LinkVote(link, user, VoteType.UPVOTE, "1.2.3.4"));
+		Links link = panService.createLink(new Links("http://www.google.es", "Google",
+				"HomePage of Google", "Google, search", user, category));
+		LinkVote vote1 = panService.createVote(new LinkVote(link, user,
+				VoteType.UPVOTE, "1.2.3.4"));
 		LinkVote vote2 = panService.findVote(vote1.getVoteId());
-		
+
 		assertEquals(vote1, vote2);
 	}
-	
-	@Test (expected = InstanceNotFoundException.class)
+
+	@Test(expected = InstanceNotFoundException.class)
 	public void findNonExistentVote() throws Exception {
 		panService.findVote(NON_EXISTENT_ID);
 	}
-	
-	@Test (expected = IpVotedException.class)
+
+	@Test(expected = IpVotedException.class)
 	public void createDuplicatedIpAnonymousVote() throws Exception {
 		User user = panService.createUser(new User("Borja", "Borja",
 				"borja@gmail.com", "192.168.1.1"));
 		Category category = panService.createCategory(new Category(
 				"Actualidad", 0));
-		Links link = panService.createLink(user.getUserId(), new Links(
-				"http://www.google.es", "Google", "HomePage of Google",
-				"Google, search", category));
-		panService.createVote(new LinkVote(link, user, VoteType.UPVOTE, "1.2.3.4"));
+		Links link = panService.createLink(new Links("http://www.google.es", "Google",
+				"HomePage of Google", "Google, search", user, category));
+		panService.createVote(new LinkVote(link, user, VoteType.UPVOTE,
+				"1.2.3.4"));
 		panService.createVote(new LinkVote(link, VoteType.DOWNVOTE, "1.2.3.4"));
 	}
-	
-	@Test (expected = UserVotedException.class)
+
+	@Test(expected = UserVotedException.class)
 	public void createDuplicatedVote() throws Exception {
 		User user = panService.createUser(new User("Borja", "Borja",
 				"borja@gmail.com", "192.168.1.1"));
 		Category category = panService.createCategory(new Category(
 				"Actualidad", 0));
-		Links link = panService.createLink(user.getUserId(), new Links(
-				"http://www.google.es", "Google", "HomePage of Google",
-				"Google, search", category));
-		panService.createVote(new LinkVote(link, user, VoteType.UPVOTE, "1.2.3.4"));
-		panService.createVote(new LinkVote(link, user, VoteType.UPVOTE, "4.3.2.1"));
-		
+		Links link = panService.createLink(new Links("http://www.google.es", "Google",
+				"HomePage of Google", "Google, search", user, category));
+		panService.createVote(new LinkVote(link, user, VoteType.UPVOTE,
+				"1.2.3.4"));
+		panService.createVote(new LinkVote(link, user, VoteType.UPVOTE,
+				"4.3.2.1"));
+
 	}
 }

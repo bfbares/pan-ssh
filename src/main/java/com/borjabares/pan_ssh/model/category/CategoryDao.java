@@ -10,6 +10,8 @@ public interface CategoryDao extends GenericDao<Category, Long> {
 	
 	public List<Category> listParentCategories();
 	
+	public List<Category> listNonParentCategories();
+	
 	public List<Category> listAllCategories();
 	
 	public List<Category> listCategoryChildrens(long parentId);

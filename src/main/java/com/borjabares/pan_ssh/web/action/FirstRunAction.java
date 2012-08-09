@@ -16,7 +16,7 @@ import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 
 @Action(value = "firstrun_save", results = {
-		@Result(type = "redirect", location = "/index"),
+		@Result(type = "redirect", location = "/index/"),
 		@Result(name = "input", location = "/firstrun") })
 @SuppressWarnings("serial")
 @Validations(requiredStrings = {

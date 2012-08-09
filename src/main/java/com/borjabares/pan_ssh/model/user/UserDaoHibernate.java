@@ -21,6 +21,16 @@ public class UserDaoHibernate extends GenericDaoHibernate<User, Long> implements
 
 	@Override
 	@SuppressWarnings("unchecked")
+	public List<User> listUsersByCriteria(int startIndex, int count,
+			String criteria) {
+		return getSession()
+				.createQuery("SELECT u FROM User u ORDER BY u." + criteria)
+				.setFirstResult(startIndex).setMaxResults(count).list();
+
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
 	public List<User> listUsersOfLevel(int startIndex, int count, Level level) {
 		return getSession()
 				.createQuery(
@@ -73,6 +83,12 @@ public class UserDaoHibernate extends GenericDaoHibernate<User, Long> implements
 		}
 
 		return false;
+	}
+
+	public User findUserByLogin(String login) {
+		return (User) getSession()
+				.createQuery("SELECT u FROM User u WHERE u.login = :login")
+				.setParameter("login", login).uniqueResult();
 	}
 
 }

@@ -12,21 +12,22 @@
     <!—[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]—>
-    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="/css/doc.css" rel="stylesheet">
+    <link href=<s:url value="/bootstrap/css/bootstrap.min.css"/> rel="stylesheet">
+    <link href=<s:url value="/bootstrap/css/bootstrap-responsive.min.css"/> rel="stylesheet">
+    <link href=<s:url value="/css/doc.css"/> rel="stylesheet">
   </head>
   <body>
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <a class="brand" href="/index"><s:text name="pan.title"/></a>
+          <a class="brand" href="/index/"><s:text name="pan.title"/></a>
           <tiles:insertAttribute name="menu" />
           <tiles:insertAttribute name="usermenu" />
         </div>
       </div>
     </div><!-- End NavBar -->
     <div class="container content">
+      <tiles:insertAttribute name="title" />
       <tiles:insertAttribute name="body" />
       <tiles:insertAttribute name="pagination" />
     </div><!-- End Container -->
@@ -35,7 +36,7 @@
 	      <tiles:insertAttribute name="footer" />
 	    </div>
     </div>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src=<s:url value="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"/>></script>
+    <script src=<s:url value="/bootstrap/js/bootstrap.min.js"/>></script>
   </body>
 </html>
