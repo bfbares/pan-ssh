@@ -51,9 +51,12 @@ CREATE INDEX UserIndexByLevel ON User (level);
 CREATE TABLE Category (
     categoryId BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(64) NOT NULL,
-    parent BIGINT NOT NULL DEFAULT 0,
+    parent BIGINT DEFAULT NULL,
     UNIQUE (name),
-    CONSTRAINT CategoryPK PRIMARY KEY(categoryId)
+    CONSTRAINT CategoryPK PRIMARY KEY(categoryId),
+    CONSTRAINT CategoryParentFK FOREIGN KEY(parent)
+        REFERENCES Category(categoryId),
+    INDEX CategoryIndexForParentFK (parent)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 CREATE INDEX CategoryIndexByCategoryId ON Category (categoryId);

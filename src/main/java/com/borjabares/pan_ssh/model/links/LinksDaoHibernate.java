@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.borjabares.modelutil.dao.GenericDaoHibernate;
+import com.borjabares.pan_ssh.model.category.Category;
 import com.borjabares.pan_ssh.util.GlobalNames.LinkStatus;
 
 @Repository("LinksDao")
@@ -73,6 +74,32 @@ public class LinksDaoHibernate extends GenericDaoHibernate<Links, Long>
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
+	public List<Links> getLinksByCategoryAndStatus(int startIndex, int count,
+			LinkStatus status, Category category) {
+		return getSession()
+				.createQuery(
+						"SELECT l FROM Links l JOIN l.categoryId c WHERE l.status = :status "
+								+ "AND c.categoryId.categoryId = :categoryId ORDER BY l.submited DESC")
+				.setParameter("status", status)
+				.setParameter("categoryId", category.getCategoryId())
+				.setFirstResult(startIndex).setMaxResults(count).list();
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Links> getLinksByParentCategoryAndStatus(int startIndex, int count,
+			LinkStatus status, Category category) {
+		return getSession()
+				.createQuery(
+						"SELECT l FROM Links l JOIN l.categoryId c WHERE l.status = :status "
+								+ "AND c.categoryId.parent.categoryId = :categoryId ORDER BY l.submited DESC")
+				.setParameter("status", status)
+				.setParameter("categoryId", category.getCategoryId())
+				.setFirstResult(startIndex).setMaxResults(count).list();
+	}
+
+	@Override
 	public int getNumberOfLinks() {
 		long numberofLinks = (Long) getSession().createQuery(
 				"SELECT COUNT(l) FROM Links l").uniqueResult();
@@ -96,6 +123,32 @@ public class LinksDaoHibernate extends GenericDaoHibernate<Links, Long>
 				.createQuery(
 						"SELECT COUNT(l) FROM Links l WHERE l.status = :status")
 				.setParameter("status", status).uniqueResult();
+
+		return (int) numberofLinks;
+	}
+
+	public int getNumberOfLinksByCategoryAndStatus(LinkStatus status,
+			Category category) {
+		long numberofLinks = (Long) getSession()
+				.createQuery(
+						"SELECT COUNT(l) FROM Links l JOIN l.categoryId c WHERE l.status = :status "
+						+ "AND c.categoryId.categoryId = :categoryId ORDER BY l.submited DESC")
+				.setParameter("status", status)
+				.setParameter("categoryId", category.getCategoryId())
+				.uniqueResult();
+
+		return (int) numberofLinks;
+	}
+	
+	public int getNumberOfLinksByParentCategoryAndStatus(LinkStatus status,
+			Category category) {
+		long numberofLinks = (Long) getSession()
+				.createQuery(
+						"SELECT COUNT(l) FROM Links l JOIN l.categoryId c WHERE l.status = :status "
+						+ "AND c.categoryId.parent.categoryId = :categoryId ORDER BY l.submited DESC")
+				.setParameter("status", status)
+				.setParameter("categoryId", category.getCategoryId())
+				.uniqueResult();
 
 		return (int) numberofLinks;
 	}

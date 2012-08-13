@@ -48,7 +48,9 @@
 		    	</s:else>
 		    	, <s:text name="link.sended" /> <s:date name="link.submited"/>, <s:date name="link.submited" nice="true"/></p>
 		    	<p class="description"><s:property value="link.description"/></p>
-		    	<p class="category"><s:a href="/link/%{link.ftitle}"><span class="badge badge-info"><s:property value="numberOfVotes"/></span> <s:text name="link.coments" /></s:a> | <s:text name="link.category" />: <s:property value="link.categoryId.name"/> | <s:text name="link.karma" />: <s:property value="link.karma"/></p>
+		    	<p class="category"><s:a href="/link/%{link.ftitle}"><span class="badge badge-info"><s:property value="numberOfVotes"/></span> <s:text name="link.coments" /></s:a> | 
+		    	<s:text name="link.category" />: <s:a href="/%{link.categoryId.parent.toFriendly()}%{linkStatus}/"><s:property value="link.categoryId.parent.name"/></s:a>, 
+		    	<s:a href="/%{link.categoryId.toFriendly()}%{linkStatus}/"><s:property value="link.categoryId.name"/></s:a> | <s:text name="link.karma" />: <s:property value="link.karma"/></p>
 	    	</div>
 	    </div>
 	</s:iterator>

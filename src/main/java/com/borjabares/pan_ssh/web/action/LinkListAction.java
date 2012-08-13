@@ -10,7 +10,8 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.borjabares.pan_ssh.model.links.FullLink;
+import com.borjabares.pan_ssh.model.category.Category;
+import com.borjabares.pan_ssh.model.panservice.FullLink;
 import com.borjabares.pan_ssh.model.panservice.ObjectBlock;
 import com.borjabares.pan_ssh.model.panservice.PanService;
 import com.borjabares.pan_ssh.model.user.User;
@@ -25,8 +26,10 @@ public class LinkListAction extends ActionSupport implements
 	@Autowired
 	private PanService panService;
 	private ObjectBlock<FullLink> objectBlock;
+	private String category;
 	private int page;
 	private String actionurl;
+	private String linkStatus;
 	private Map<String, Object> session;
 	private HttpServletRequest request;
 
@@ -46,12 +49,16 @@ public class LinkListAction extends ActionSupport implements
 		this.objectBlock = objectBlock;
 	}
 
-	public int getPage() {
-		return page;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setPage(int page) {
-		this.page = page;
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public int getPage() {
+		return page;
 	}
 
 	public void setPage(String page) {
@@ -60,6 +67,10 @@ public class LinkListAction extends ActionSupport implements
 		}
 		this.page = Integer.parseInt(page);
 	}
+	
+	public void setPage(int page) {
+		this.page = page;
+	}
 
 	public String getActionurl() {
 		return actionurl;
@@ -67,6 +78,14 @@ public class LinkListAction extends ActionSupport implements
 
 	public void setActionurl(String actionurl) {
 		this.actionurl = actionurl;
+	}
+
+	public String getLinkStatus() {
+		return linkStatus;
+	}
+
+	public void setLinkStatus(String linkStatus) {
+		this.linkStatus = linkStatus;
 	}
 
 	@Override
@@ -84,6 +103,7 @@ public class LinkListAction extends ActionSupport implements
 		int count = 20;
 
 		actionurl = "/index";
+		linkStatus = "/index";
 
 		if (page == 0) {
 			page = 1;
@@ -106,6 +126,7 @@ public class LinkListAction extends ActionSupport implements
 		int count = 20;
 
 		actionurl = "/queue";
+		linkStatus = "/queue";
 
 		if (page == 0) {
 			page = 1;
@@ -128,6 +149,7 @@ public class LinkListAction extends ActionSupport implements
 		int count = 20;
 
 		actionurl = "/discarded";
+		linkStatus = "/discarded";
 
 		if (page == 0) {
 			page = 1;
@@ -140,6 +162,109 @@ public class LinkListAction extends ActionSupport implements
 		} else {
 			objectBlock = panService.listFullLinksByStatus((page - 1) * count,
 					count, LinkStatus.DISCARD, null, request.getRemoteAddr());
+		}
+
+		return SUCCESS;
+	}
+	
+	@Action(value = "{category}/index/{page}", results = { @Result(location = "/linkListPublished") })
+	public String listPublishedByCategory() throws Exception{
+		int count = 20;
+		Category category = panService.findCategoryByName(this.category);
+		actionurl = category+"/index";
+		linkStatus = "/index";
+
+		if (page == 0) {
+			page = 1;
+		}
+		
+		if (category.getParent() == null){
+			if (session.containsKey(GlobalNames.USER)) {
+				objectBlock = panService.listFullLinksByParentCategoryAndStatus((page - 1) * count,
+						count, LinkStatus.PUBLISHED, category, 
+						(User) session.get(GlobalNames.USER), null);
+			} else {
+				objectBlock = panService.listFullLinksByParentCategoryAndStatus((page - 1) * count,
+						count, LinkStatus.PUBLISHED, category,  null, request.getRemoteAddr());
+			}
+		} else {
+			if (session.containsKey(GlobalNames.USER)) {
+				objectBlock = panService.listFullLinksByCategoryAndStatus((page - 1) * count,
+						count, LinkStatus.PUBLISHED, category, 
+						(User) session.get(GlobalNames.USER), null);
+			} else {
+				objectBlock = panService.listFullLinksByCategoryAndStatus((page - 1) * count,
+						count, LinkStatus.PUBLISHED, category,  null, request.getRemoteAddr());
+			}
+		}
+
+		return SUCCESS;
+	}
+
+	@Action(value = "{category}/queue/{page}", results = { @Result(location = "/linkListQueue") })
+	public String listPendingByCategory() throws Exception{
+	
+		int count = 20;
+		Category category = panService.findCategoryByName(this.category);
+		actionurl = category+"/queue";
+		linkStatus = "/queue";
+
+		if (page == 0) {
+			page = 1;
+		}
+
+		if (category.getParent() == null){
+			if (session.containsKey(GlobalNames.USER)) {
+				objectBlock = panService.listFullLinksByParentCategoryAndStatus((page - 1) * count,
+						count, LinkStatus.QUEUED, category, 
+						(User) session.get(GlobalNames.USER), null);
+			} else {
+				objectBlock = panService.listFullLinksByParentCategoryAndStatus((page - 1) * count,
+						count, LinkStatus.QUEUED, category,  null, request.getRemoteAddr());
+			}
+		} else {
+			if (session.containsKey(GlobalNames.USER)) {
+				objectBlock = panService.listFullLinksByCategoryAndStatus((page - 1) * count,
+						count, LinkStatus.QUEUED, category, 
+						(User) session.get(GlobalNames.USER), null);
+			} else {
+				objectBlock = panService.listFullLinksByCategoryAndStatus((page - 1) * count,
+						count, LinkStatus.QUEUED, category,  null, request.getRemoteAddr());
+			}
+		}
+
+		return SUCCESS;
+	}
+
+	@Action(value = "{category}/discarded/{page}", results = { @Result(location = "/linkListDiscarded") })
+	public String listDiscardedByCategory() throws Exception{
+		int count = 20;
+		Category category = panService.findCategoryByName(this.category);
+		actionurl = category+"/discarded";
+		linkStatus = "/discarded";
+
+		if (page == 0) {
+			page = 1;
+		}
+
+		if (category.getParent() == null){
+			if (session.containsKey(GlobalNames.USER)) {
+				objectBlock = panService.listFullLinksByParentCategoryAndStatus((page - 1) * count,
+						count, LinkStatus.DISCARD, category, 
+						(User) session.get(GlobalNames.USER), null);
+			} else {
+				objectBlock = panService.listFullLinksByParentCategoryAndStatus((page - 1) * count,
+						count, LinkStatus.DISCARD, category,  null, request.getRemoteAddr());
+			}
+		} else {
+			if (session.containsKey(GlobalNames.USER)) {
+				objectBlock = panService.listFullLinksByCategoryAndStatus((page - 1) * count,
+						count, LinkStatus.DISCARD, category, 
+						(User) session.get(GlobalNames.USER), null);
+			} else {
+				objectBlock = panService.listFullLinksByCategoryAndStatus((page - 1) * count,
+						count, LinkStatus.DISCARD, category,  null, request.getRemoteAddr());
+			}
 		}
 
 		return SUCCESS;

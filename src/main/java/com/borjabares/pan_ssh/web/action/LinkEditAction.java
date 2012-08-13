@@ -80,7 +80,7 @@ public class LinkEditAction extends ActionSupport implements UserAware, Preparab
 
 	@Override
 	public void prepare() throws Exception {
-		categories = panService.listNonParentCategories();
+		categories = panService.listAllCategoriesSorted();
 	}
 	
 	private boolean isEditable(){
@@ -125,12 +125,21 @@ public class LinkEditAction extends ActionSupport implements UserAware, Preparab
 			@Result(name = "input", location = "/link_edit") })
 	public String update() throws Exception{
 
+		Links aux = panService.findLink(link.getLinkId());
+		link.setLinkAuthor(aux.getLinkAuthor());
+		link.setSubmited(aux.getSubmited());
+		
 		if (!isEditable()){
 			return INPUT;
 		}
 		
 		if (categoryId==0){
-			addActionError(getText("error.category.required"));
+			addFieldError("categoryId",getText("error.category.required"));
+			return INPUT;
+		}
+		
+		if (panService.findCategory(categoryId).getParent()==null){
+			addFieldError("categoryId",getText("error.category.parent"));
 			return INPUT;
 		}
 		
@@ -141,14 +150,10 @@ public class LinkEditAction extends ActionSupport implements UserAware, Preparab
 			link.setUrl(expandedURL);
 		}
 		
-		Links aux = panService.findLink(link.getLinkId());
-		
 		link.setFtitle(aux.getFtitle());
 		link.setKarma(aux.getKarma());
-		link.setLinkAuthor(aux.getLinkAuthor());
 		link.setPublished(aux.getPublished());
 		link.setStatus(aux.getStatus());
-		link.setSubmited(aux.getSubmited());
 		link.setTags(aux.getTags());
 		link.setVersion(aux.getVersion());
 		

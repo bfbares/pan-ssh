@@ -1,21 +1,22 @@
 package com.borjabares.pan_ssh.model.category;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+import com.borjabares.pan_ssh.util.FriendlyTitleGenerator;
 import com.borjabares.pan_ssh.util.Trimmer;
-import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 
 @Entity
 @Validations(
-		requiredFields ={
-		@RequiredFieldValidator(fieldName = "parent", message = "Debe introducir una categoría padre.", key="error.parent.required")},
 		requiredStrings = {
 		@RequiredStringValidator(fieldName = "name", message = "Debe proporcionar un nombre para la categoría.", key = "error.name.required", trim = true, shortCircuit = true)}, 
 		stringLengthFields = {
@@ -24,12 +25,12 @@ import com.opensymphony.xwork2.validator.annotations.Validations;
 public class Category {
 	private long categoryId;
 	private String name;
-	private long parent;
+	private Category parent;
 
 	public Category() {
 	}
 
-	public Category(String name, long parent) {
+	public Category(String name, Category parent) {
 		this.name = name;
 		this.parent = parent;
 	}
@@ -53,12 +54,18 @@ public class Category {
 		this.name = Trimmer.trim(name);
 	}
 
-	public long getParent() {
+	@ManyToOne(optional=true, fetch=FetchType.EAGER) 
+	@JoinColumn(name="parent", nullable = true)
+	public Category getParent() {
 		return parent;
 	}
 
-	public void setParent(long parent) {
+	public void setParent(Category parent) {
 		this.parent = parent;
+	}
+	
+	public String toFriendly(){
+		return FriendlyTitleGenerator.stripDiacritics(name).toLowerCase();
 	}
 
 	@Override

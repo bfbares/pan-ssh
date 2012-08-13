@@ -11,7 +11,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.borjabares.modelutil.exceptions.InstanceNotFoundException;
-import com.borjabares.pan_ssh.model.links.FullLink;
+import com.borjabares.pan_ssh.model.panservice.FullLink;
 import com.borjabares.pan_ssh.model.panservice.PanService;
 import com.borjabares.pan_ssh.model.user.User;
 import com.borjabares.pan_ssh.util.GlobalNames;
@@ -27,6 +27,7 @@ public class LinkInfoAction extends ActionSupport implements
 	private long id;
 	private String ftitle;
 	private int page;
+	private String linkStatus;
 	private Map<String, Object> session;
 	private HttpServletRequest request;
 
@@ -77,6 +78,14 @@ public class LinkInfoAction extends ActionSupport implements
 		this.page = Integer.parseInt(page);
 	}
 
+	public String getLinkStatus() {
+		return linkStatus;
+	}
+
+	public void setLinkStatus(String linkStatus) {
+		this.linkStatus = linkStatus;
+	}
+
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
@@ -101,7 +110,18 @@ public class LinkInfoAction extends ActionSupport implements
 		} catch (InstanceNotFoundException e) {
 			return ERROR;
 		}
-
+		
+		switch (fullLink.getLink().getStatus()){
+			case PUBLISHED: linkStatus = "/index";
+							break;
+			case QUEUED: linkStatus = "/queue";
+							break;
+			case DISCARD: linkStatus = "/discarded";
+							break;
+			case BANNED: linkStatus = "/banned";
+							break;
+		}
+		
 		return SUCCESS;
 	}
 
@@ -118,6 +138,17 @@ public class LinkInfoAction extends ActionSupport implements
 			}
 		} catch (InstanceNotFoundException e) {
 			return ERROR;
+		}
+		
+		switch (fullLink.getLink().getStatus()){
+		case PUBLISHED: linkStatus = "/index";
+						break;
+		case QUEUED: linkStatus = "/queue";
+						break;
+		case DISCARD: linkStatus = "/discarded";
+						break;
+		case BANNED: linkStatus = "/banned";
+						break;
 		}
 
 		return SUCCESS;

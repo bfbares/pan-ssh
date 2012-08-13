@@ -40,7 +40,9 @@
 		<s:url action="link_edit" id="edit">
 			<s:param name="id" value="fullLink.link.linkId" />
 		</s:url>
-    	<p class="category"><s:a href="/link/%{fullLink.link.ftitle}"><span class="badge badge-info"><s:property value="fullLink.numberOfVotes"/></span> <s:text name="link.coments" /></s:a> | <s:text name="link.category" />: <s:property value="fullLink.link.categoryId.name"/> | <s:text name="link.karma" />: <s:property value="fullLink.link.karma"/>
+    	<p class="category"><s:a href="/link/%{fullLink.link.ftitle}"><span class="badge badge-info"><s:property value="fullLink.numberOfVotes"/></span> <s:text name="link.coments" /></s:a> | 
+    	<s:text name="link.category" />: <s:a href="/%{fullLink.link.categoryId.parent.toFriendly()}%{linkStatus}/"><s:property value="fullLink.link.categoryId.parent.name"/></s:a>, 
+    	<s:a href="/%{fullLink.link.categoryId.toFriendly()}%{linkStatus}/"><s:property value="fullLink.link.categoryId.name"/></s:a> | <s:text name="link.karma" />: <s:property value="fullLink.link.karma"/>
     	<s:if test="#session['user'] != null">
     		<s:if test="((#session['user'].level.toString() == \"ADMIN\") || 
              			(#session['user'].level.toString() == \"GOD\"))">

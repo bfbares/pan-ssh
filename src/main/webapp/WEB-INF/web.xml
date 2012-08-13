@@ -25,6 +25,12 @@
 	</context-param>
 
 	<listener>
+	  <listener-class>
+            com.borjabares.pan_ssh.web.cron.QuartzSchedulerListener
+          </listener-class>
+	</listener>
+
+	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 

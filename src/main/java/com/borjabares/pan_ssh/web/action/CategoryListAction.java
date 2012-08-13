@@ -38,7 +38,9 @@ public class CategoryListAction extends ActionSupport {
 	
 	public String execute(){
 		
-		list = panService.listAllCategories();
+		list = panService.listAllCategoriesSorted();
+		
+		System.out.println(list);
 		
 		return SUCCESS;
 	}

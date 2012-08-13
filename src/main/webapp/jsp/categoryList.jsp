@@ -13,7 +13,7 @@
         <tr>
             <td><s:property value="categoryId"/></td>
             <td><s:property value="name"/></td>
-            <td><s:property value="parent"/></td>
+            <td><s:property value="parent.name"/></td>
             <td>
                 <s:url action="categoryForm" id="url">
                     <s:param name="id" value="categoryId" />

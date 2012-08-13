@@ -11,7 +11,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.borjabares.pan_ssh.model.links.FullLink;
+import com.borjabares.pan_ssh.model.panservice.FullLink;
 import com.borjabares.pan_ssh.model.panservice.ObjectBlock;
 import com.borjabares.pan_ssh.model.panservice.PanService;
 import com.borjabares.pan_ssh.model.user.User;

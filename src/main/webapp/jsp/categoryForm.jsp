@@ -10,7 +10,7 @@
 		        <s:hidden name="category.categoryId"/>
 		    </s:if>
 		    <s:textfield cssClass="input-xlarge" name="category.name" placeholder="getText('category.name')"/>
-		    <s:select label="%{getText('category.selectparent')}" headerKey="-1" emptyOption="true" list="categories" listKey="categoryId" listValue="name" name="category.parent" />
+		    <s:select label="%{getText('category.selectparent')}" headerKey="0" headerValue="%{getText('form.none')}" list="categories" listKey="categoryId" listValue="name" name="parent" />
 		    <s:submit cssClass="btn btn-primary pull-right" value="%{getText('form.send')}"/>
 		</s:form>
 	</div>

@@ -20,7 +20,6 @@ import com.borjabares.pan_ssh.exceptions.ParentCategoryException;
 import com.borjabares.pan_ssh.exceptions.UserVotedException;
 import com.borjabares.pan_ssh.model.category.Category;
 import com.borjabares.pan_ssh.model.category.CategoryDao;
-import com.borjabares.pan_ssh.model.links.FullLink;
 import com.borjabares.pan_ssh.model.links.Links;
 import com.borjabares.pan_ssh.model.links.LinksDao;
 import com.borjabares.pan_ssh.model.linkvote.LinkVote;
@@ -180,11 +179,9 @@ public class PanServiceImpl implements PanService {
 		return linksDao.find(linkId);
 	}
 
-	@Override
 	@Transactional(readOnly = true)
-	public FullLink findFullLink(long linkId, User user, String ip)
-			throws InstanceNotFoundException {
-		Links link = linksDao.find(linkId);
+	private FullLink fromLinkToFullLink(Links link, User user, String ip) {
+		
 		if (user == null) {
 			return new FullLink(link,
 					voteDao.getNumberOfVotes(link.getLinkId()),
@@ -197,6 +194,29 @@ public class PanServiceImpl implements PanService {
 		}
 	}
 
+	@Transactional(readOnly = true)
+	private List<FullLink> fromLinkToFullLink(List<Links> links, User user,
+			String ip) {
+		List<FullLink> fullLink = new ArrayList<FullLink>();
+
+		for (Iterator<Links> iterator = links.iterator(); iterator.hasNext();) {
+			Links links2 = (Links) iterator.next();
+			fullLink.add(fromLinkToFullLink(links2, user, ip));
+		}
+
+		return fullLink;
+
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public FullLink findFullLink(long linkId, User user, String ip)
+			throws InstanceNotFoundException {
+		Links link = linksDao.find(linkId);
+		
+		return fromLinkToFullLink(link, user, ip);
+	}
+
 	@Override
 	@Transactional(readOnly = true)
 	public FullLink findFullLinkByFtitle(String ftitle, User user, String ip)
@@ -205,16 +225,8 @@ public class PanServiceImpl implements PanService {
 		if (link == null) {
 			throw new InstanceNotFoundException(link, ftitle);
 		}
-		if (user == null) {
-			return new FullLink(link,
-					voteDao.getNumberOfVotes(link.getLinkId()),
-					voteDao.ipVoted(ip, link.getLinkId()), null);
-		} else {
-			return new FullLink(link,
-					voteDao.getNumberOfVotes(link.getLinkId()),
-					voteDao.userVotedLink(user.getUserId(), link.getLinkId()),
-					user);
-		}
+		
+		return fromLinkToFullLink(link, user, ip);
 	}
 
 	@Override
@@ -241,7 +253,7 @@ public class PanServiceImpl implements PanService {
 				count, status), startIndex, count,
 				linksDao.getNumberOfLinksByStatus(status));
 	}
-
+	
 	@Override
 	@Transactional(readOnly = true)
 	public ObjectBlock<FullLink> listFullLinksByStatus(int startIndex,
@@ -249,26 +261,28 @@ public class PanServiceImpl implements PanService {
 		List<Links> links = linksDao
 				.getLinksByStatus(startIndex, count, status);
 
-		List<FullLink> fullLink = new ArrayList<FullLink>();
-
-		for (Iterator<Links> iterator = links.iterator(); iterator.hasNext();) {
-			Links links2 = (Links) iterator.next();
-			FullLink fullLink2;
-			if (user == null) {
-				fullLink2 = new FullLink(links2,
-						voteDao.getNumberOfVotes(links2.getLinkId()),
-						voteDao.ipVoted(ip, links2.getLinkId()), null);
-			} else {
-				fullLink2 = new FullLink(links2,
-						voteDao.getNumberOfVotes(links2.getLinkId()),
-						voteDao.userVotedLink(user.getUserId(),
-								links2.getLinkId()), user);
-			}
-			fullLink.add(fullLink2);
-		}
-
-		return new ObjectBlock<FullLink>(fullLink, startIndex, count,
+		return new ObjectBlock<FullLink>(fromLinkToFullLink(links, user, ip), startIndex, count,
 				linksDao.getNumberOfLinksByStatus(status));
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public ObjectBlock<FullLink> listFullLinksByCategoryAndStatus(
+			int startIndex, int count, LinkStatus status, Category category, User user, String ip) {
+		List<Links> links = linksDao.getLinksByCategoryAndStatus(startIndex, count, status, category);
+
+		return new ObjectBlock<FullLink>(fromLinkToFullLink(links, user, ip), startIndex, count,
+				linksDao.getNumberOfLinksByCategoryAndStatus(status, category));
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public ObjectBlock<FullLink> listFullLinksByParentCategoryAndStatus(
+			int startIndex, int count, LinkStatus status, Category category, User user, String ip) {
+		List<Links> links = linksDao.getLinksByParentCategoryAndStatus(startIndex, count, status, category);
+
+		return new ObjectBlock<FullLink>(fromLinkToFullLink(links, user, ip), startIndex, count,
+				linksDao.getNumberOfLinksByParentCategoryAndStatus(status, category));
 	}
 
 	@Override
@@ -278,14 +292,14 @@ public class PanServiceImpl implements PanService {
 		if (categoryDao.existsCategory(category.getName())) {
 			throw new DuplicatedCategoryNameException(category.getName());
 		}
-		if (category.getParent() != 0) {
+		if (category.getParent() != null) {
 			try {
-				Category parent = categoryDao.find(category.getParent());
-				if (parent.getParent() != 0) {
-					throw new ParentCategoryException(category.getParent());
+				Category parent = categoryDao.find(category.getParent().getCategoryId());
+				if (parent.getParent() != null) {
+					throw new ParentCategoryException(category.getParent().getCategoryId());
 				}
 			} catch (InstanceNotFoundException e) {
-				throw new ParentCategoryException(category.getParent());
+				throw new ParentCategoryException(category.getParent().getCategoryId());
 			}
 		}
 
@@ -313,6 +327,19 @@ public class PanServiceImpl implements PanService {
 			throws InstanceNotFoundException {
 		return categoryDao.find(categoryId);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Category findCategoryByName(String name)
+	throws InstanceNotFoundException{
+		Category category = categoryDao.findCategoryByName(name);
+		
+		if (category==null){
+			throw new InstanceNotFoundException(name, "Category");
+		}
+		
+		return category;
+	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -330,6 +357,27 @@ public class PanServiceImpl implements PanService {
 	@Transactional(readOnly = true)
 	public List<Category> listAllCategories() {
 		return categoryDao.listAllCategories();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Category> listAllCategoriesSorted() {
+		List<Category> toRet = new ArrayList<Category>();
+		List<Category> parents = categoryDao.listParentCategories();
+		for (Iterator<Category> iterator = parents.iterator(); iterator
+				.hasNext();) {
+			Category parent = (Category) iterator.next();
+			toRet.add(parent);
+			List<Category> childrens = categoryDao.listCategoryChildrens(parent
+					.getCategoryId());			
+			for (Iterator<Category> iterator2 = childrens.iterator(); iterator2
+					.hasNext();) {
+				Category children = (Category) iterator2.next();
+				children.setName("- " + children.getName());
+				toRet.add(children);
+			}
+		}
+		return toRet;
 	}
 
 	@Override
@@ -381,6 +429,7 @@ public class PanServiceImpl implements PanService {
 	@Transactional
 	public LinkVote createVote(LinkVote vote) throws IpVotedException,
 			UserVotedException {
+		float karma = 8;
 		if (vote.getUser() == null) {
 			if (voteDao.ipVoted(vote.getIp(), vote.getLink().getLinkId())) {
 				throw new IpVotedException(vote.getIp(), vote.getLink()
@@ -392,13 +441,15 @@ public class PanServiceImpl implements PanService {
 				throw new UserVotedException(vote.getUser().getUserId(), vote
 						.getLink().getLinkId());
 			}
+			karma = vote.getUser().getKarma();
 		}
-		if (vote.getType()==VoteType.DOWNVOTE){
-			vote.getLink().addKarma(-vote.getUser().getKarma());
+
+		if (vote.getType() == VoteType.DOWNVOTE) {
+			vote.getLink().addKarma(-karma);
 		} else {
-			vote.getLink().addKarma(vote.getUser().getKarma());
+			vote.getLink().addKarma(karma);
 		}
-		
+
 		linksDao.save(vote.getLink());
 		voteDao.save(vote);
 

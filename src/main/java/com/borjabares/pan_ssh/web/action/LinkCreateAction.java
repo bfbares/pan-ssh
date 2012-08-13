@@ -81,7 +81,7 @@ public class LinkCreateAction extends ActionSupport implements ServletRequestAwa
 
 	@Override
 	public void prepare() throws Exception {
-		categories = panService.listNonParentCategories();
+		categories = panService.listAllCategoriesSorted();
 	}
 	
 	@Action(value = "linkForm", results = { @Result(location = "/linkForm") })
@@ -99,7 +99,12 @@ public class LinkCreateAction extends ActionSupport implements ServletRequestAwa
 	public String save() throws Exception{
 
 		if (categoryId==0){
-			addActionError(getText("error.category.required"));
+			addFieldError("categoryId",getText("error.category.required"));
+			return INPUT;
+		}
+		
+		if (panService.findCategory(categoryId).getParent()==null){
+			addFieldError("categoryId",getText("error.category.parent"));
 			return INPUT;
 		}
 		

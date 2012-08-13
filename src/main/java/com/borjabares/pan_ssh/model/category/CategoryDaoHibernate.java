@@ -23,31 +23,45 @@ public class CategoryDaoHibernate extends GenericDaoHibernate<Category, Long>
 		return false;
 	}
 
+	@Override
+	public Category findCategoryByName(String name) {
+		return (Category) getSession()
+				.createQuery("SELECT c FROM Category c WHERE c.name = :name")
+				.setParameter("name", name).uniqueResult();
+	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Category> listParentCategories() {
-		return getSession().createQuery(
-				"SELECT c FROM Category c WHERE c.parent = 0 ORDER BY c.name")
+		return getSession()
+				.createQuery(
+						"SELECT c FROM Category c WHERE c.parent = null ORDER BY c.name")
 				.list();
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Category> listNonParentCategories() {
-		return getSession().createQuery(
-				"SELECT c FROM Category c WHERE c.parent != 0 ORDER BY c.name")
+		return getSession()
+				.createQuery(
+						"SELECT p FROM Category c INNER JOIN c.parent p ORDER BY p.name")
 				.list();
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Category> listAllCategories() {
 		return getSession().createQuery(
 				"SELECT c FROM Category c ORDER BY c.categoryId").list();
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Category> listCategoryChildrens(long parentId) {
 		return getSession()
 				.createQuery(
-						"SELECT c FROM Category c WHERE parent = :parentId")
+						"SELECT c FROM Category c"
+								+ " WHERE c.parent.categoryId = :parentId ORDER BY c.name")
 				.setParameter("parentId", parentId).list();
 	}
 }

@@ -9,7 +9,7 @@
 		    <s:textfield cssClass="input-xlarge" name="link.url" placeholder="getText('link.url')"/>
 		    <s:textfield cssClass="input-xlarge" name="link.title" placeholder="getText('link.title')"/>
 		    <s:textarea cssClass="input-xlarge" name="link.description" placeholder="getText('link.description')" rows="4"/>
-		    <s:radio label="%{getText('link.selectcategory')}" name="categoryId" list="categories" listKey="categoryId" listValue="name" />
+		    <s:select label="%{getText('link.selectcategory')}" headerKey="-1" emptyOption="false" list="categories" listKey="categoryId" listValue="name" name="categoryId" />
 		    <s:submit cssClass="btn btn-primary pull-right" value="%{getText('form.send')}"/>
 		</s:form>
 	</div>

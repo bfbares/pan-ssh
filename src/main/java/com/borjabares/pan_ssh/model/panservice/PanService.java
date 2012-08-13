@@ -13,7 +13,6 @@ import com.borjabares.pan_ssh.exceptions.LinkAlreadyReportedException;
 import com.borjabares.pan_ssh.exceptions.ParentCategoryException;
 import com.borjabares.pan_ssh.exceptions.UserVotedException;
 import com.borjabares.pan_ssh.model.category.Category;
-import com.borjabares.pan_ssh.model.links.FullLink;
 import com.borjabares.pan_ssh.model.links.Links;
 import com.borjabares.pan_ssh.model.linkvote.LinkVote;
 import com.borjabares.pan_ssh.model.report.Report;
@@ -58,7 +57,7 @@ public interface PanService {
 	public void deleteLink(long linkId) throws InstanceNotFoundException;
 
 	public Links findLink(long linkId) throws InstanceNotFoundException;
-
+	
 	public FullLink findFullLink(long linkId, User user, String ip)
 			throws InstanceNotFoundException;
 
@@ -75,6 +74,12 @@ public interface PanService {
 
 	public ObjectBlock<FullLink> listFullLinksByStatus(int startIndex,
 			int count, LinkStatus status, User user, String ip);
+	
+	public ObjectBlock<FullLink> listFullLinksByCategoryAndStatus(int startIndex,
+			int count, LinkStatus status, Category category, User user, String ip);
+	
+	public ObjectBlock<FullLink> listFullLinksByParentCategoryAndStatus(int startIndex,
+			int count, LinkStatus status, Category category, User user, String ip);
 
 	public Category createCategory(Category category)
 			throws ParentCategoryException, DuplicatedCategoryNameException;
@@ -87,11 +92,16 @@ public interface PanService {
 	public Category findCategory(long categoryId)
 			throws InstanceNotFoundException;
 
+	public Category findCategoryByName(String name)
+	throws InstanceNotFoundException;
+	
 	public List<Category> listParentCategories();
 
 	public List<Category> listNonParentCategories();
 
 	public List<Category> listAllCategories();
+	
+	public List<Category> listAllCategoriesSorted();
 
 	public List<Category> listCategoryChildrens(long parentId);
 

@@ -6,6 +6,8 @@ import com.borjabares.modelutil.dao.GenericDao;
 
 public interface CategoryDao extends GenericDao<Category, Long> {
 
+	public Category findCategoryByName(String name);
+	
 	public boolean existsCategory(String name);
 	
 	public List<Category> listParentCategories();
