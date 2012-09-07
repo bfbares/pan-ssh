@@ -49,6 +49,10 @@
 				</value>
 				<value>com.borjabares.pan_ssh.model.linkvote.LinkVote
 				</value>
+				<value>com.borjabares.pan_ssh.model.comment.Comment
+				</value>
+				<value>com.borjabares.pan_ssh.model.commentvote.CommentVote
+				</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

@@ -5,6 +5,7 @@ public class GlobalNames {
 	public static enum LinkStatus {PUBLISHED, DISCARD, QUEUED, BANNED};
 	public static enum ReportStatus {PENDING, CHECKED};
 	public static enum VoteType {UPVOTE, DOWNVOTE};
+	public static enum CommentStatus {ACTIVE, INACTIVE};
 	public static final String USER = "user";
 	public static final String COOKIEUSER = "cookieUser";
 }

@@ -15,6 +15,8 @@ CREATE TABLE PingTable (foo CHAR(1));
 -- must be dropped first (otherwise, the corresponding checks on those tables
 -- could not be done).
 
+DROP TABLE CommentVote;
+DROP TABLE Comment;
 DROP TABLE LinkVote;
 DROP TABLE Report;
 DROP TABLE Links;
@@ -67,7 +69,7 @@ CREATE TABLE Links (
     linkId BIGINT NOT NULL AUTO_INCREMENT,
     linkAuthor BIGINT NOT NULL,
     categoryId BIGINT NOT NULL,
-    url VARCHAR(128) NOT NULL,
+    url VARCHAR(256) NOT NULL,
     title VARCHAR(128) NOT NULL,
     ftitle VARCHAR(128) NOT NULL,
     description TEXT,
@@ -137,3 +139,44 @@ CREATE TABLE LinkVote (
 
 CREATE INDEX VoteIndexByVoteId ON LinkVote (voteId);
 CREATE INDEX VoteIndexByIP ON LinkVote (ip);
+
+-- -------------------------------- Comment --------------------------------------
+
+CREATE TABLE Comment (
+    commentId BIGINT NOT NULL AUTO_INCREMENT,
+    linkId BIGINT NOT NULL,
+    userId BIGINT NOT NULL,
+    comment TEXT NOT NULL,
+    submited TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    karma DECIMAL(10,2) NOT NULL,
+    status enum('ACTIVE', 'INACTIVE') CHARACTER SET utf8 NOT NULL DEFAULT 'ACTIVE',
+    CONSTRAINT CommentPK PRIMARY KEY(commentId),
+    CONSTRAINT CommentLinksFK FOREIGN KEY(linkId)
+        REFERENCES Links(linkId),
+    CONSTRAINT CommentUserFK FOREIGN KEY(userId)
+        REFERENCES User(userId),
+    INDEX CommentIndexForLinkFK(linkId),
+    INDEX CommentIndexForUserFK(userId)
+) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+CREATE INDEX CommentIndexByCommentId ON Comment (commentId);
+
+-- ------------------------------ CommentVote ------------------------------------
+
+CREATE TABLE CommentVote (
+    voteId BIGINT NOT NULL AUTO_INCREMENT,
+    commentId BIGINT NOT NULL,
+    userId BIGINT NOT NULL,
+    submited TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    karma DECIMAL(10,2) NOT NULL,
+    type enum('UPVOTE', 'DOWNVOTE') CHARACTER SET utf8 NOT NULL,
+    CONSTRAINT CommentVotePK PRIMARY KEY (voteId),
+    CONSTRAINT CommentVoteComentFK FOREIGN KEY(commentId)
+        REFERENCES Comment(commentId),
+    CONSTRAINT CommentVoteUserFK FOREIGN KEY(userId)
+        REFERENCES User(userId),
+    INDEX CommentVoteIndexForCommentFK(commentId),
+    INDEX CommentIndexForUserFK(userId)
+) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+CREATE INDEX VoteCommentIndexByVoteId ON CommentVote (voteId);

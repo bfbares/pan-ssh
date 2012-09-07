@@ -14,8 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.borjabares.modelutil.exceptions.InstanceNotFoundException;
 import com.borjabares.pan_ssh.exceptions.*;
 import com.borjabares.pan_ssh.model.category.Category;
+import com.borjabares.pan_ssh.model.comment.Comment;
+import com.borjabares.pan_ssh.model.commentvote.CommentVote;
 import com.borjabares.pan_ssh.model.links.Links;
 import com.borjabares.pan_ssh.model.linkvote.LinkVote;
+import com.borjabares.pan_ssh.model.panservice.FullComment;
 import com.borjabares.pan_ssh.model.panservice.ObjectBlock;
 import com.borjabares.pan_ssh.model.panservice.PanService;
 import com.borjabares.pan_ssh.model.report.Report;
@@ -384,6 +387,88 @@ public class PanServiceTest {
 				"1.2.3.4"));
 		panService.createVote(new LinkVote(link, user, VoteType.UPVOTE,
 				"4.3.2.1"));
+	}
 
+	@Test
+	public void createAndFindComment() throws Exception {
+		User user = panService.createUser(new User("Borja", "Borja",
+				"borja@gmail.com", "192.168.1.1"));
+		Category category = panService.createCategory(new Category(
+				"Actualidad", null));
+		Links link = panService.createLink(new Links("http://www.google.es",
+				"Google", "HomePage of Google", "Google, search", user,
+				category));
+		Comment comment1 = panService.createComment(new Comment(link, user,
+				"Excelente buscador!"));
+		Comment comment2 = panService.findComment(comment1.getCommentId());
+
+		assertEquals(comment2, comment1);
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void findNonExistentComment() throws Exception {
+		panService.findComment(NON_EXISTENT_ID);
+	}
+
+	@Test
+	public void listCommentsByLinkId() throws Exception {
+		User user = panService.createUser(new User("Borja", "Borja",
+				"borja@gmail.com", "192.168.1.1"));
+		Category category = panService.createCategory(new Category(
+				"Actualidad", null));
+		Links link1 = panService.createLink(new Links("http://www.google.es",
+				"Google", "HomePage of Google", "Google, search", user,
+				category));
+
+		Links link2 = panService
+				.createLink(new Links("http://www.yahoo.es", "Yahoo",
+						"HomePage of Yahoo", "Google, search", user, category));
+		panService
+				.createComment(new Comment(link1, user, "Excelente buscador!"));
+		panService.createComment(new Comment(link1, user, "Es de gran ayuda"));
+		panService.createComment(new Comment(link2, user,
+				"No es tan bueno como google"));
+
+		ObjectBlock<FullComment> list = panService.listCommentsByLinkId(0, 10,
+				link1.getLinkId(),null);
+
+		assertEquals(list.getList().size(), 2);
+	}
+
+	@Test
+	public void createAndFindCommentVote() throws Exception {
+		User user = panService.createUser(new User("Borja", "Borja",
+				"borja@gmail.com", "192.168.1.1"));
+		Category category = panService.createCategory(new Category(
+				"Actualidad", null));
+		Links link = panService.createLink(new Links("http://www.google.es",
+				"Google", "HomePage of Google", "Google, search", user,
+				category));
+		Comment comment = panService.createComment(new Comment(link, user,
+				"Excelente buscador!"));
+		CommentVote commentVote1 = panService.createCommentVote(new CommentVote(comment, user, VoteType.UPVOTE));
+		CommentVote commentVote2 = panService.findCommentVote(commentVote1.getVoteId());
+		
+		assertEquals(commentVote1, commentVote2);
+	}
+	
+	@Test(expected = InstanceNotFoundException.class)
+	public void findNonExistentCommentVote() throws Exception{
+		panService.findCommentVote(NON_EXISTENT_ID);
+	}
+	
+	@Test(expected = UserVotedException.class)
+	public void createDuplicatedCommentVote() throws Exception {
+		User user = panService.createUser(new User("Borja", "Borja",
+				"borja@gmail.com", "192.168.1.1"));
+		Category category = panService.createCategory(new Category(
+				"Actualidad", null));
+		Links link = panService.createLink(new Links("http://www.google.es",
+				"Google", "HomePage of Google", "Google, search", user,
+				category));
+		Comment comment = panService.createComment(new Comment(link, user,
+		"Excelente buscador!"));
+		panService.createCommentVote(new CommentVote(comment, user, VoteType.UPVOTE));
+		panService.createCommentVote(new CommentVote(comment, user, VoteType.DOWNVOTE));
 	}
 }

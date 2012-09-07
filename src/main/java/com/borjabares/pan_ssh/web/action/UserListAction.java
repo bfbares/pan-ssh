@@ -54,10 +54,19 @@ public class UserListAction extends ActionSupport {
 	}
 	
 	public void setPage(String page) {
-		if (page.isEmpty()){
-			page = "1";
+		try{
+			this.page = Integer.parseInt(page);
+		} catch (NumberFormatException e){
+			this.page = 1;
 		}
-		this.page = Integer.parseInt(page);
+	}
+	
+	public void setPage(String[] page) {
+		try{
+			this.page = Integer.parseInt(page[0]);
+		} catch (NumberFormatException e){
+			this.page = 1;
+		}
 	}
 
 	public String getActionurl() {
@@ -73,7 +82,7 @@ public class UserListAction extends ActionSupport {
 		
 		actionurl = "/user_list/"+criteria;
 
-		if (page == 0) {
+		if (page <= 0) {
 			page = 1;
 		}
 

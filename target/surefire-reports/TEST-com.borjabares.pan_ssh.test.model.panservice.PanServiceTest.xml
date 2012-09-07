@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="4.453" errors="0" skipped="0" tests="28" name="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest">
+<testsuite failures="0" time="4.829" errors="0" skipped="0" tests="34" name="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries"/>
@@ -22,7 +22,7 @@
     <property name="basedir" value="/Users/Buh/Documents/workspace/pan-ssh"/>
     <property name="java.endorsed.dirs" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/endorsed"/>
     <property name="os.arch" value="x86_64"/>
-    <property name="surefire.real.class.path" value="/Users/Buh/Documents/workspace/pan-ssh/target/surefire/surefirebooter6034029956086406294.jar"/>
+    <property name="surefire.real.class.path" value="/Users/Buh/Documents/workspace/pan-ssh/target/surefire/surefirebooter7850373370085808999.jar"/>
     <property name="java.io.tmpdir" value="/var/folders/of/oftZbp7fHceIih+A9QbJdk+++TI/-Tmp-/"/>
     <property name="line.separator" value="
 "/>
@@ -46,7 +46,7 @@
     <property name="java.vm.specification.version" value="1.0"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"/>
-    <property name="sun.java.command" value="/Users/Buh/Documents/workspace/pan-ssh/target/surefire/surefirebooter6034029956086406294.jar /Users/Buh/Documents/workspace/pan-ssh/target/surefire/surefire5193862609632550265tmp /Users/Buh/Documents/workspace/pan-ssh/target/surefire/surefire6005066556955330334tmp"/>
+    <property name="sun.java.command" value="/Users/Buh/Documents/workspace/pan-ssh/target/surefire/surefirebooter7850373370085808999.jar /Users/Buh/Documents/workspace/pan-ssh/target/surefire/surefire8122461812784731813tmp /Users/Buh/Documents/workspace/pan-ssh/target/surefire/surefire2993205446200942854tmp"/>
     <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
     <property name="user.language" value="es"/>
     <property name="awt.toolkit" value="apple.awt.CToolkit"/>
@@ -65,32 +65,38 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="2.977" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindUser"/>
-  <testcase time="0.043" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findNonExistentUserId"/>
+  <testcase time="3.341" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindUser"/>
+  <testcase time="0.042" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findNonExistentUserId"/>
   <testcase time="0.04" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedLoginUsers"/>
-  <testcase time="0.028" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedEmailUsers"/>
+  <testcase time="0.032" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedEmailUsers"/>
   <testcase time="0.045" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findUserByLevel"/>
-  <testcase time="0.029" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="modifyUser"/>
-  <testcase time="0.036" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="deleteUser"/>
-  <testcase time="0.047" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="login"/>
-  <testcase time="0.043" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindCategory"/>
-  <testcase time="0.028" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createNonExistentCategoryId"/>
-  <testcase time="0.029" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedCategories"/>
-  <testcase time="0.039" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listParentCategories"/>
+  <testcase time="0.027" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="modifyUser"/>
+  <testcase time="0.039" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="deleteUser"/>
+  <testcase time="0.067" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="login"/>
+  <testcase time="0.036" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindCategory"/>
+  <testcase time="0.033" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createNonExistentCategoryId"/>
+  <testcase time="0.021" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedCategories"/>
+  <testcase time="0.031" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listParentCategories"/>
   <testcase time="0.036" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listNonParentCategories"/>
-  <testcase time="0.111" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listCategoryChildrens"/>
-  <testcase time="0.05" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindLink"/>
-  <testcase time="0.038" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findNonExistentLinkId"/>
-  <testcase time="0.052" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedLink"/>
-  <testcase time="0.036" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindReport"/>
-  <testcase time="0.023" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findNonExistenReportId"/>
-  <testcase time="0.076" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createReportedLink"/>
-  <testcase time="0.053" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listPendingReports"/>
-  <testcase time="0.102" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listLinksByUserId"/>
-  <testcase time="0.074" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listLinksByStatus"/>
-  <testcase time="0.03" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindAnonymousVote"/>
-  <testcase time="0.039" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindNonAnonymousVote"/>
-  <testcase time="0.035" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findNonExistentVote"/>
-  <testcase time="0.044" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedIpAnonymousVote"/>
-  <testcase time="0.028" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedVote"/>
+  <testcase time="0.061" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listCategoryChildrens"/>
+  <testcase time="0.078" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindLink"/>
+  <testcase time="0.034" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findNonExistentLinkId"/>
+  <testcase time="0.07" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedLink"/>
+  <testcase time="0.046" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindReport"/>
+  <testcase time="0.015" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findNonExistenReportId"/>
+  <testcase time="0.028" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createReportedLink"/>
+  <testcase time="0.065" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listPendingReports"/>
+  <testcase time="0.076" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listLinksByUserId"/>
+  <testcase time="0.05" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listLinksByStatus"/>
+  <testcase time="0.045" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindAnonymousVote"/>
+  <testcase time="0.029" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindNonAnonymousVote"/>
+  <testcase time="0.017" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findNonExistentVote"/>
+  <testcase time="0.027" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedIpAnonymousVote"/>
+  <testcase time="0.032" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedVote"/>
+  <testcase time="0.023" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindComment"/>
+  <testcase time="0.014" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findNonExistentComment"/>
+  <testcase time="0.038" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="listCommentsByLinkId"/>
+  <testcase time="0.038" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createAndFindCommentVote"/>
+  <testcase time="0.014" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="findNonExistentCommentVote"/>
+  <testcase time="0.031" classname="com.borjabares.pan_ssh.test.model.panservice.PanServiceTest" name="createDuplicatedCommentVote"/>
 </testsuite>

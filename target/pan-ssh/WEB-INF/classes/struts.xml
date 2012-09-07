@@ -13,8 +13,10 @@
 		<result-types>
 			<result-type name="tiles"
 				class="org.apache.struts2.views.tiles.TilesResult" default="true" />
+			<result-type name="rss"
+				class="com.googlecode.s2rome.struts2.plugin.rome.RomeResult" />
 		</result-types>
-		
+
 		<interceptors>
 			<interceptor name="cookieInterceptor"
 				class="com.borjabares.pan_ssh.web.interceptor.CookieInterceptor" />
@@ -24,7 +26,7 @@
 				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
 		</interceptors>
-		
+
 		<default-interceptor-ref name="cookieStack" />
 
 		<global-results>
@@ -33,19 +35,23 @@
 		</global-results>
 
 		<!-- Uncomment for deployment -->
-		<!-- <global-exception-mappings> <exception-mapping exception="java.lang.Exception" 
-			result="error" /> </global-exception-mappings> -->
+		<global-exception-mappings> <exception-mapping exception="java.lang.Exception" 
+			result="error" /> </global-exception-mappings>
 
-		<action name="discarded" >
-		    <result type="redirect">/discarded/</result>
+		<action name="about">
+			<result>/about</result>
+		</action>
+
+		<action name="discarded">
+			<result type="redirect">/discarded/</result>
 		</action>
 
 		<action name="firstrun">
 			<result>/firstrun</result>
 		</action>
-		
-		<action name="index" >
-		    <result type="redirect">/index/</result>
+
+		<action name="index">
+			<result type="redirect">/index/</result>
 		</action>
 
 		<action name="ipVoted">
@@ -55,17 +61,26 @@
 		<action name="loginForm">
 			<result>/loginForm</result>
 		</action>
-		
-		<action name="queue" >
-		    <result type="redirect">/queue/</result>
-		</action>
-		
-		<action name="user/{login}" class="com.borjabares.pan_ssh.web.action.UserInfoAction">
-			<result>/userInfo</result>
+
+		<action name="queue">
+			<result type="redirect">/queue/</result>
 		</action>
 
 		<action name="register">
 			<result>/userForm</result>
+		</action>
+		
+		<action name="rss" class="com.borjabares.pan_ssh.web.action.RssAction">
+			<result type="rss">
+				<!-- Required: the expression to find the SyndFeed object on the stack -->
+				<param name="feedName">myFeed</param>
+				<!-- Optional: feed type - for a full list, see below -->
+				<param name="feedType">rss_2.0</param>
+				<!-- Optional: the encoding type -->
+				<param name="encoding">UTF-8</param>
+				<!-- Optional: mime type -->
+				<param name="mimeType">text/xml</param>
+			</result>
 		</action>
 
 		<action name="userSuccess">
@@ -88,23 +103,23 @@
 				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
 		</interceptors>
-		
+
 		<default-interceptor-ref name="userStack" />
 
 		<action name="userEdit">
 			<result>/userEdit</result>
 		</action>
-		
+
 		<action name="userEditSuccess">
 			<result>/userEditSuccess</result>
 		</action>
-		
+
 		<action name="reportForm">
 			<result>/reportForm</result>
 		</action>
-		
+
 	</package>
-	
+
 	<package name="secure" namespace="/secure" extends="default">
 
 		<interceptors>
@@ -121,23 +136,27 @@
 				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
 		</interceptors>
-		
+
 		<default-interceptor-ref name="secureStack" />
-		
-		<action name="banned" >
-		    <result type="redirect">/banned/</result>
+
+		<action name="banned">
+			<result type="redirect">/banned/</result>
 		</action>
-		
-		<action name="report_list" >
-		    <result type="redirect">/report_list/</result>
+
+		<action name="report_list">
+			<result type="redirect">/report_list/</result>
 		</action>
-		
-		<action name="user_list" >
-		    <result type="redirect">/user_list/</result>
+
+		<action name="user_list">
+			<result type="redirect">/user_list/login/</result>
+		</action>
+
+		<action name="user_list/">
+			<result type="redirect">/user_list/login/</result>
 		</action>
 
 	</package>
-	
+
 	<package name="god" namespace="/god" extends="default">
 
 		<interceptors>
@@ -154,7 +173,7 @@
 				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
 		</interceptors>
-		
+
 		<default-interceptor-ref name="secureStack" />
 
 	</package>

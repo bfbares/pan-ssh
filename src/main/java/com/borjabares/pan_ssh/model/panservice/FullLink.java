@@ -10,6 +10,7 @@ public class FullLink {
 
 	private Links link;
 	private long numberOfVotes;
+	private long numberOfComments;
 	private boolean votable;
 	private boolean voted;
 	private boolean mine;
@@ -20,9 +21,10 @@ public class FullLink {
 	public FullLink() {
 	}
 
-	public FullLink(Links link, long numberOfVotes, boolean voted, User user) {
+	public FullLink(Links link, long numberOfVotes, long numberOfComments, boolean voted, User user) {
 		this.link = link;
 		this.numberOfVotes = numberOfVotes;
+		this.numberOfComments = numberOfComments;
 		this.voted = voted;
 		this.adminDisposable = false;
 		this.votable = !(link.getStatus() == LinkStatus.DISCARD || link
@@ -30,10 +32,10 @@ public class FullLink {
 		if (user != null) {
 			this.mine = link.getLinkAuthor().getUserId() == user.getUserId();
 			Calendar actual = Calendar.getInstance();
-			actual.roll(Calendar.HOUR_OF_DAY, false);
+			actual.add(Calendar.HOUR_OF_DAY, -1);
 			this.editable = link.getSubmited().after(actual);
-			actual.roll(Calendar.HOUR_OF_DAY, true);
-			actual.roll(Calendar.DAY_OF_MONTH, false);
+			actual.add(Calendar.HOUR_OF_DAY, 1);
+			actual.add(Calendar.DAY_OF_MONTH, -1);
 			if (link.getStatus() == LinkStatus.QUEUED) {
 				if (mine) {
 					this.userDisposable = link.getSubmited().after(actual);
@@ -46,11 +48,12 @@ public class FullLink {
 		}
 	}
 
-	public FullLink(Links link, long numberOfVotes, boolean votable,
+	public FullLink(Links link, long numberOfVotes, long numberOfComments, boolean votable,
 			boolean voted, boolean mine, boolean editable,
 			boolean userDisposable, boolean adminDisposable) {
 		this.link = link;
 		this.numberOfVotes = numberOfVotes;
+		this.numberOfComments = numberOfComments;
 		this.votable = votable;
 		this.voted = voted;
 		this.mine = mine;
@@ -73,6 +76,14 @@ public class FullLink {
 
 	public void setNumberOfVotes(long numberOfVotes) {
 		this.numberOfVotes = numberOfVotes;
+	}
+
+	public long getNumberOfComments() {
+		return numberOfComments;
+	}
+
+	public void setNumberOfComments(long numberOfComments) {
+		this.numberOfComments = numberOfComments;
 	}
 
 	public boolean getVotable() {

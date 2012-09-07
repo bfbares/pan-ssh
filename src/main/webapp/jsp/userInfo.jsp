@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <div class="row">
-	<div class="span4 offset4 well userinfo">
+	<div class="span4"></div>
+	<div class="span4 well userinfo">
 		<h1><s:property value="user.login"/></h1>
 		<s:if test="%{(#session['user'].level.toString() == \"ADMIN\") || 
 	              (#session['user'].level.toString() == \"GOD\")}">
@@ -27,7 +28,9 @@
 		    	<p><strong><s:text name="user.ip" />:</strong> <s:property value="user.ip"/></p>
 	        </s:if>
         </s:if>
-        <div class="span2 offset2 levelch">
+        	<div class="span5"></div>
+			<div class="span6 levelch">
+			<%-- Change Level --%>
         	<s:if test="user.level.toString()!=\"GOD\"">
 		        <s:if test="%{(#session['user'].level.toString() == \"ADMIN\") || 
 			              (#session['user'].level.toString() == \"GOD\")}">

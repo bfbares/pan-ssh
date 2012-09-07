@@ -26,6 +26,14 @@ public interface LinksDao extends GenericDao<Links, Long> {
 	
 	public List<Links> getLinksByParentCategoryAndStatus(int startIndex, int count,
 			LinkStatus status, Category category);
+	
+	public List<Links> getOlderQueuedLinks(int count);
+	
+	public List<Links> getQueuedLinksByKarma();
+	
+	public List<Links> getQueuedLinksOlderThanAWeek();
+	
+	public List<Links> getPublishedLinksToday();
 
 	public int getNumberOfLinks();
 
@@ -38,5 +46,9 @@ public interface LinksDao extends GenericDao<Links, Long> {
 
 	public int getNumberOfLinksByParentCategoryAndStatus(LinkStatus status,
 			Category category);
+	
+	public int getNumberOfPublishedLinksTodayByUser(long userId);
+	
+	public int getNumberOfLinksTodayByUser(long userId);
 	
 }

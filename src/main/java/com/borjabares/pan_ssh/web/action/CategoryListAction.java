@@ -40,8 +40,6 @@ public class CategoryListAction extends ActionSupport {
 		
 		list = panService.listAllCategoriesSorted();
 		
-		System.out.println(list);
-		
 		return SUCCESS;
 	}
 

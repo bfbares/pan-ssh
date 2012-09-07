@@ -13,6 +13,8 @@ import com.borjabares.pan_ssh.exceptions.LinkAlreadyReportedException;
 import com.borjabares.pan_ssh.exceptions.ParentCategoryException;
 import com.borjabares.pan_ssh.exceptions.UserVotedException;
 import com.borjabares.pan_ssh.model.category.Category;
+import com.borjabares.pan_ssh.model.comment.Comment;
+import com.borjabares.pan_ssh.model.commentvote.CommentVote;
 import com.borjabares.pan_ssh.model.links.Links;
 import com.borjabares.pan_ssh.model.linkvote.LinkVote;
 import com.borjabares.pan_ssh.model.report.Report;
@@ -57,6 +59,10 @@ public interface PanService {
 	public void deleteLink(long linkId) throws InstanceNotFoundException;
 
 	public Links findLink(long linkId) throws InstanceNotFoundException;
+	
+	public void publishLink(long linkId) throws InstanceNotFoundException;
+	
+	public void discardLink(long linkId) throws InstanceNotFoundException;
 	
 	public FullLink findFullLink(long linkId, User user, String ip)
 			throws InstanceNotFoundException;
@@ -120,5 +126,23 @@ public interface PanService {
 			UserVotedException;
 
 	public LinkVote findVote(long voteId) throws InstanceNotFoundException;
+	
+	public Comment createComment(Comment comment);
+	
+	public void updateComment(Comment comment);
+	
+	public Comment findComment(long commentId) throws InstanceNotFoundException;
+	
+	public ObjectBlock<FullComment> listCommentsByLinkId(int startIndex, int count, long linkId, User user);
+	
+	public ObjectBlock<FullComment> listCommentsByLinkIdByKarma(int startIndex, int count, long linkId, User user);
+	
+	public CommentVote createCommentVote(CommentVote commentVote) throws UserVotedException, InstanceNotFoundException ;
+	
+	public CommentVote findCommentVote(long voteId) throws InstanceNotFoundException;
 
+	public void linkWorker() throws InstanceNotFoundException;
+	
+	public void userWorker() throws InstanceNotFoundException;
+	
 }

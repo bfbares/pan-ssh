@@ -33,8 +33,8 @@ import com.opensymphony.xwork2.validator.annotations.Validations;
 		@RequiredStringValidator(fieldName = "title", message = "Debe proporcionar un título para la noticia.", key = "error.title.required", shortCircuit = true),
 		@RequiredStringValidator(fieldName = "description", message = "Debe proporcionar una descripción.", key = "error.description.required", trim = true, shortCircuit = true) }, 
 		stringLengthFields = {
-		@StringLengthFieldValidator(fieldName = "title", minLength = "4", maxLength = "120", trim = true, message = "El título debe tener entre ${minLength} y ${maxLength} caracteres.", key = "error.title.length"),
-		@StringLengthFieldValidator(fieldName = "description", minLength = "6", maxLength = "360", trim = true, message = "La descripción debe tener entre ${minLength} y ${maxLength} caracteres.", key = "error.description.length") }, 
+		@StringLengthFieldValidator(fieldName = "title", minLength = "25", maxLength = "120", trim = true, message = "El título debe tener entre ${minLength} y ${maxLength} caracteres.", key = "error.title.length"),
+		@StringLengthFieldValidator(fieldName = "description", minLength = "50", maxLength = "360", trim = true, message = "La descripción debe tener entre ${minLength} y ${maxLength} caracteres.", key = "error.description.length") }, 
 		urls = { @UrlValidator(fieldName = "url", message = "Debe introducir una url válida.", key = "error.url.validator")}
 )
 public class Links {

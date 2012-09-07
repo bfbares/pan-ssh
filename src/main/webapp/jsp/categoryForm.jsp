@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <div class="row">
-	<div class="span4 offset4 well">
+	<div class="span4"></div>
+	<div class="span4 well">
 		<h1><s:text name="section.categoryAdd"/></h1>
 		<p></p>
 		<s:actionerror theme="bootstrap"/>

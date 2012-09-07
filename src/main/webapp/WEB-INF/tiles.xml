@@ -20,6 +20,10 @@
         <put-attribute name="title" value="" />
     </definition>
     
+    <definition name="/about" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/about.jsp" />
+    </definition>
+    
     <definition name="/categoryDelSuccess" extends="baseLayout">
         <put-attribute name="body" value="/jsp/categoryDelSuccess.jsp" />
     </definition>
@@ -34,6 +38,10 @@
     
     <definition name="/categorySuccess" extends="baseLayout">
         <put-attribute name="body" value="/jsp/categorySuccess.jsp" />
+    </definition>
+    
+    <definition name="/commentForm" extends="baseLayout">
+        <put-attribute name="body" value="/jsp/commentForm.jsp" />
     </definition>
     
     <definition name="/error" extends="baseLayout">
@@ -58,6 +66,7 @@
     
     <definition name="/linkInfo" extends="baseLayout">
         <put-attribute name="body" value="/jsp/linkInfo.jsp" />
+        <put-attribute name="pagination" value="/jsp/pagination.jsp" />
     </definition>
     
     <definition name="/linkListBanned" extends="baseLayout">

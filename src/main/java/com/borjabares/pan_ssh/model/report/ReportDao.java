@@ -5,10 +5,12 @@ import java.util.List;
 import com.borjabares.modelutil.dao.GenericDao;
 
 public interface ReportDao extends GenericDao<Report, Long> {
-	
+
 	public List<Report> getPendingReports(int startIndex, int count);
 
 	public int getNumberOfPendingReports();
-	
+
+	public int getNumberOfReportsByUserIdToday(long userId);
+
 	public boolean linkReported(long linkId);
 }

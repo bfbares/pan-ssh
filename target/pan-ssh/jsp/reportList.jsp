@@ -20,10 +20,7 @@
 					<s:param name="login" value="user.login" />
 				</s:url>
 	            <td><s:a href="%{loginurl}"><s:property value="user.login"/></s:a></td>
-	            <s:url action="link_info" id="linkurl">
-					<s:param name="link" value="link.linkId" />
-				</s:url>
-				<td><s:a href="%{linkurl}"><s:property value="link.linkId"/></s:a></td>
+				<td><s:a href="/link/%{link.ftitle}"><s:property value="link.ftitle"/></s:a></td>
 				<td><s:property value="reason"/></td>
 	            <td><s:date name="submited"/></td>
 	            <s:url action="report_check" id="reporturl">

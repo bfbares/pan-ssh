@@ -110,9 +110,16 @@ public class LinkCreateAction extends ActionSupport implements ServletRequestAwa
 		
 		link.setLinkAuthor(user);
 		link.setCategoryId(panService.findCategory(categoryId));
-		String expandedURL = URLExpander.expandShortURL(link.getUrl());
-		if (expandedURL != null){
-			link.setUrl(expandedURL);
+		try{
+			String expandedURL = URLExpander.expandShortURL(link.getUrl());
+			if (expandedURL != null){
+				link.setUrl(expandedURL);
+			}
+		} catch (Exception e) {
+			if (!e.getMessage().contains("403")){
+				addFieldError("link.url", getText("error.url.nonexisten"));
+				return INPUT;
+			}
 		}
 		
 		link.setFtitle(FriendlyTitleGenerator.generate(link.getTitle()));

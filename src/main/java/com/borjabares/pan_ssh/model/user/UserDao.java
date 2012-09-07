@@ -13,6 +13,8 @@ public interface UserDao extends GenericDao<User, Long> {
 			String criteria);
 
 	public List<User> listUsersOfLevel(int startIndex, int count, Level level);
+	
+	public List<User> listUsersLoggedToday();
 
 	public int getNumberOfUsers();
 

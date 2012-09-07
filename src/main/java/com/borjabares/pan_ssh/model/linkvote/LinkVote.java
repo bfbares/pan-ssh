@@ -31,6 +31,7 @@ public class LinkVote {
 	private String ip;
 
 	public LinkVote() {
+		this.submited = Calendar.getInstance();
 	}
 
 	public LinkVote(Links link, VoteType type, String ip) {

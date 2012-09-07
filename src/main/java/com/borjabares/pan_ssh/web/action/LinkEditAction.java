@@ -121,7 +121,7 @@ public class LinkEditAction extends ActionSupport implements UserAware, Preparab
 		return SUCCESS;
 	}
 
-	@Action(value = "link_update", results = { @Result(type="redirect",location = "/link/${link.ftitle}"),
+	@Action(value = "link_update", results = { @Result(type="redirect",location = "/link/${link.ftitle}/"),
 			@Result(name = "input", location = "/link_edit") })
 	public String update() throws Exception{
 

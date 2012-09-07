@@ -63,7 +63,7 @@ public class CategoryCreateAction extends ActionSupport implements Preparable {
 	public long getParent() {
 		return parent;
 	}
-	
+
 	public void setParent(long parent) {
 		this.parent = parent;
 	}
@@ -74,22 +74,24 @@ public class CategoryCreateAction extends ActionSupport implements Preparable {
 	}
 
 	@Action(value = "categoryForm", results = { @Result(location = "/categoryForm") })
-	public String populate() throws InstanceNotFoundException{
-		
-		if (id!=0){
+	public String populate() throws InstanceNotFoundException {
+
+		if (id != 0) {
 			category = panService.findCategory(id);
-			parent = category.getParent().getCategoryId();
+			if (category.getParent() != null) {
+				parent = category.getParent().getCategoryId();
+			}
 		}
-		
+
 		return SUCCESS;
 	}
 
 	@Action(value = "category_save", results = {
 			@Result(location = "/categorySuccess"),
 			@Result(name = "input", location = "/categoryForm") })
-	public String save() throws Exception{
-		
-		if (parent!=0){
+	public String save() throws Exception {
+
+		if (parent != 0) {
 			category.setParent(panService.findCategory(parent));
 		}
 

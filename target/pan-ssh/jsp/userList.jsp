@@ -4,13 +4,13 @@
 <p></p>
 <table class="table table-striped table-bordered table-condensed">
 	<tr>
-        <th><s:text name="user.login"/></th>
-        <th><s:text name="user.email"/></th>
-        <th><s:text name="user.created"/></th>
-        <th><s:text name="user.lastlogin"/></th>
-        <th><s:text name="user.karma"/></th>
-        <th><s:text name="user.level"/></th>
-        <th><s:text name="user.ip"/></th>
+        <th><s:a href="/user_list/login/"><s:text name="user.login"/></s:a></th>
+        <th><s:a href="/user_list/email/"><s:text name="user.email"/></s:a></th>
+        <th><s:a href="/user_list/created/"><s:text name="user.created"/></s:a></th>
+        <th><s:a href="/user_list/lastlogin/"><s:text name="user.lastlogin"/></s:a></th>
+        <th><s:a href="/user_list/karma/"><s:text name="user.karma"/></s:a></th>
+        <th><s:a href="/user_list/level/"><s:text name="user.level"/></s:a></th>
+        <th><s:a href="/user_list/ip/"><s:text name="user.ip"/></s:a></th>
     </tr>
     <s:iterator value="objectBlock.list">
         <tr>

@@ -4,7 +4,8 @@
 <p class="lead"><s:text name="fr.text"/></p>
 <p></p>
 <div class="row">
-	<div class="span4 offset4 well">
+	<div class="span4"></div>
+	<div class="span4 well">
 		<s:actionerror theme="bootstrap"/>
 		<s:form theme="bootstrap" action="firstrun_save">
 		    <s:textfield cssClass="input-xlarge" name="user.login" placeholder="getText('user.login')"/>

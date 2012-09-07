@@ -9,7 +9,6 @@ import com.borjabares.pan_ssh.model.links.Links;
 import com.borjabares.pan_ssh.model.panservice.PanService;
 import com.borjabares.pan_ssh.model.user.User;
 import com.borjabares.pan_ssh.util.GlobalNames.Level;
-import com.borjabares.pan_ssh.util.GlobalNames.LinkStatus;
 import com.borjabares.pan_ssh.web.interceptor.UserAware;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -61,9 +60,8 @@ public class LinkDiscardAction extends ActionSupport implements UserAware {
 				return ERROR;
 			}
 		}
-		
-		link.setStatus(LinkStatus.DISCARD);
-		panService.updateLink(link);
+
+		panService.discardLink(link.getLinkId());
 
 		return SUCCESS;
 	}

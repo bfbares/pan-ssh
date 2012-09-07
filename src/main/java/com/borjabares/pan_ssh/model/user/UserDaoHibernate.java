@@ -1,5 +1,6 @@
 package com.borjabares.pan_ssh.model.user;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -37,6 +38,17 @@ public class UserDaoHibernate extends GenericDaoHibernate<User, Long> implements
 						"SELECT u FROM User u WHERE u.level = :level ORDER BY u.login")
 				.setParameter("level", level).setFirstResult(startIndex)
 				.setMaxResults(count).list();
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<User> listUsersLoggedToday() {
+		Calendar date = Calendar.getInstance();
+		date.add(Calendar.DAY_OF_YEAR, -1);
+		return getSession()
+				.createQuery(
+						"SELECT u FROM User u WHERE u.lastlogin > :date")
+				.setCalendarDate("date", date).list();
 	}
 
 	@Override

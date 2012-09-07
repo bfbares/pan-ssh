@@ -39,16 +39,25 @@ public class ReportListAction extends ActionSupport {
 	public int getPage() {
 		return page;
 	}
-
-	public void setPage(String page) {
-		if (page.isEmpty()){
-			page = "1";
-		}
-		this.page = Integer.parseInt(page);
-	}
 	
 	public void setPage(int page) {
 		this.page = page;
+	}
+	
+	public void setPage(String page) {
+		try{
+			this.page = Integer.parseInt(page);
+		} catch (NumberFormatException e){
+			this.page = 1;
+		}
+	}
+	
+	public void setPage(String[] page) {
+		try{
+			this.page = Integer.parseInt(page[0]);
+		} catch (NumberFormatException e){
+			this.page = 1;
+		}
 	}
 
 	public String getActionurl() {
@@ -65,7 +74,7 @@ public class ReportListAction extends ActionSupport {
 		
 		actionurl = "/report_list";
 
-		if (page == 0) {
+		if (page <= 0) {
 			page = 1;
 		}
 

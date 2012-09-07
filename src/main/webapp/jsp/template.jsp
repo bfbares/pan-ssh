@@ -17,7 +17,7 @@
     <link href=<s:url value="/css/doc.css"/> rel="stylesheet">
   </head>
   <body>
-    <div class="navbar navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="brand" href="/index/"><s:text name="pan.title"/></a>
@@ -27,9 +27,15 @@
       </div>
     </div><!-- End NavBar -->
     <div class="container content">
-      <tiles:insertAttribute name="title" />
-      <tiles:insertAttribute name="body" />
-      <tiles:insertAttribute name="pagination" />
+      <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="span12">
+            <tiles:insertAttribute name="title" />
+            <tiles:insertAttribute name="body" />
+            <tiles:insertAttribute name="pagination" />
+          </div>
+        </div>
+     </div>
     </div><!-- End Container -->
     <div class="container-fluid upline">
 	    <div class="container footer">

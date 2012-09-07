@@ -60,16 +60,25 @@ public class LinkListAction extends ActionSupport implements
 	public int getPage() {
 		return page;
 	}
-
-	public void setPage(String page) {
-		if (page.isEmpty()) {
-			page = "1";
-		}
-		this.page = Integer.parseInt(page);
-	}
 	
 	public void setPage(int page) {
 		this.page = page;
+	}
+	
+	public void setPage(String page) {
+		try{
+			this.page = Integer.parseInt(page);
+		} catch (NumberFormatException e){
+			this.page = 1;
+		}
+	}
+	
+	public void setPage(String[] page) {
+		try{
+			this.page = Integer.parseInt(page[0]);
+		} catch (NumberFormatException e){
+			this.page = 1;
+		}
 	}
 
 	public String getActionurl() {
@@ -105,7 +114,7 @@ public class LinkListAction extends ActionSupport implements
 		actionurl = "/index";
 		linkStatus = "/index";
 
-		if (page == 0) {
+		if (page <= 0) {
 			page = 1;
 		}
 
@@ -128,7 +137,7 @@ public class LinkListAction extends ActionSupport implements
 		actionurl = "/queue";
 		linkStatus = "/queue";
 
-		if (page == 0) {
+		if (page <= 0) {
 			page = 1;
 		}
 
@@ -151,7 +160,7 @@ public class LinkListAction extends ActionSupport implements
 		actionurl = "/discarded";
 		linkStatus = "/discarded";
 
-		if (page == 0) {
+		if (page <= 0) {
 			page = 1;
 		}
 
@@ -174,7 +183,7 @@ public class LinkListAction extends ActionSupport implements
 		actionurl = category+"/index";
 		linkStatus = "/index";
 
-		if (page == 0) {
+		if (page <= 0) {
 			page = 1;
 		}
 		
@@ -209,7 +218,7 @@ public class LinkListAction extends ActionSupport implements
 		actionurl = category+"/queue";
 		linkStatus = "/queue";
 
-		if (page == 0) {
+		if (page <= 0) {
 			page = 1;
 		}
 
@@ -243,7 +252,7 @@ public class LinkListAction extends ActionSupport implements
 		actionurl = category+"/discarded";
 		linkStatus = "/discarded";
 
-		if (page == 0) {
+		if (page <= 0) {
 			page = 1;
 		}
 
