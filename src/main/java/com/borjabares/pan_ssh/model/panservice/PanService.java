@@ -127,6 +127,8 @@ public interface PanService {
 
 	public LinkVote findVote(long voteId) throws InstanceNotFoundException;
 	
+	public long getNumberOfVotes(long linkId);
+	
 	public Comment createComment(Comment comment);
 	
 	public void updateComment(Comment comment);

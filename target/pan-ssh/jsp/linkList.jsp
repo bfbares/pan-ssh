@@ -22,13 +22,13 @@
 			    		<s:url action="upvote" id="upvote">
 							<s:param name="id" value="link.linkId" />
 						</s:url>
-				    	<p><s:a href="%{upvote}"><i class="icon-arrow-up"></i></s:a></p>
+				    	<p><s:a href="%{upvote}" cssClass="upv" data-id="%{link.linkId}"><i class="icon-arrow-up"></i></s:a></p>
 				    	<p><s:text name="form.vote" /></p>
 				    	<p><span class="badge badge-info"><s:property value="numberOfVotes"/></span></p>
 				    	<s:url action="downvote" id="downvote">
 							<s:param name="id" value="link.linkId" />
 						</s:url>
-				    	<p><s:a href="%{downvote}"><i class="icon-arrow-down"></i></s:a></p>
+				    	<p><s:a href="%{downvote}" cssClass="downv" data-id="%{link.linkId}"><i class="icon-arrow-down"></i></s:a></p>
 			    	</div>
 		    	</s:else>
  		    </s:if>

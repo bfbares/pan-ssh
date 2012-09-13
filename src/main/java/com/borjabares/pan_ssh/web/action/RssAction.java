@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.borjabares.pan_ssh.model.links.Links;
@@ -17,6 +19,8 @@ import com.sun.syndication.feed.synd.SyndEntryImpl;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndFeedImpl;
 
+@Action(value = "rss", results = {
+		@Result(type = "rss", params = {"feedName","myFeed"})})
 @SuppressWarnings("serial")
 public class RssAction extends ActionSupport {
 

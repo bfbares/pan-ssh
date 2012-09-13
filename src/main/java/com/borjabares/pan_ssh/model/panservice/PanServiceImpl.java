@@ -513,6 +513,12 @@ public class PanServiceImpl implements PanService {
 		return linkvoteDao.find(voteId);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public long getNumberOfVotes(long linkId) {
+		return linkvoteDao.getNumberOfVotes(linkId);
+	}
+
 	// ************************************COMMENT*************************************
 
 	@Override
@@ -697,7 +703,7 @@ public class PanServiceImpl implements PanService {
 						linkBonus.add(bonus);
 						continue;
 					}
-					// <70% Downvotes = Discard
+					// >70% Downvotes = Discard
 					if (upvotes / votes <= 0.3 && votes > 50) {
 						discardLink(link.getLinkId());
 						linkBonus.add(bonus);
@@ -823,7 +829,7 @@ public class PanServiceImpl implements PanService {
 			temp = 0;
 
 			// Less active users don't get punished by karma system
-			if (newKarma < 9) {
+			if (newKarma < 9 && submissionsToday < 5) {
 				newKarma = 9;
 			}
 
@@ -867,8 +873,12 @@ public class PanServiceImpl implements PanService {
 				newKarma = 0;
 			}
 
-			// user.setKarma((0.7F * user.getKarma()) + (0.3F * newKarma));
-			// updateUser(user);
+			user.setKarma((0.7F * user.getKarma()) + (0.3F * newKarma));
+
+			if (user.getLevel() == Level.GOD) {
+				user.setKarma(25F);
+			}
+			updateUser(user);
 
 		}
 
@@ -881,8 +891,9 @@ public class PanServiceImpl implements PanService {
 			Links link = (Links) iterator.next();
 			if (!users.contains(link.getLinkAuthor())) {
 				if (link.getLinkAuthor().getKarma() <= 23) {
-					// link.getLinkAuthor().setKarma(link.getLinkAuthor().getKarma()+2);
-					// updateUser(link.getLinkAuthor());
+					link.getLinkAuthor().setKarma(
+							link.getLinkAuthor().getKarma() + 2);
+					updateUser(link.getLinkAuthor());
 				}
 			}
 		}

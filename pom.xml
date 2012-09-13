@@ -4,7 +4,7 @@
 	<groupId>com.borjabares</groupId>
 	<artifactId>pan-ssh</artifactId>
 	<packaging>war</packaging>
-	<version>0.8.0</version>
+	<version>1.0.0</version>
 	<name>pan-ssh</name>
 	<url>http://maven.apache.org</url>
 
@@ -111,6 +111,11 @@
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-tiles-plugin</artifactId>
+			<version>${struts.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-json-plugin</artifactId>
 			<version>${struts.version}</version>
 		</dependency>
 		<!--Struts2 Bootstrap -->

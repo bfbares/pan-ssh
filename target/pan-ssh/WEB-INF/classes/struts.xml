@@ -15,6 +15,7 @@
 				class="org.apache.struts2.views.tiles.TilesResult" default="true" />
 			<result-type name="rss"
 				class="com.googlecode.s2rome.struts2.plugin.rome.RomeResult" />
+			<result-type name="json" class="org.apache.struts2.json.JSONResult" />
 		</result-types>
 
 		<interceptors>
@@ -68,19 +69,6 @@
 
 		<action name="register">
 			<result>/userForm</result>
-		</action>
-		
-		<action name="rss" class="com.borjabares.pan_ssh.web.action.RssAction">
-			<result type="rss">
-				<!-- Required: the expression to find the SyndFeed object on the stack -->
-				<param name="feedName">myFeed</param>
-				<!-- Optional: feed type - for a full list, see below -->
-				<param name="feedType">rss_2.0</param>
-				<!-- Optional: the encoding type -->
-				<param name="encoding">UTF-8</param>
-				<!-- Optional: mime type -->
-				<param name="mimeType">text/xml</param>
-			</result>
 		</action>
 
 		<action name="userSuccess">

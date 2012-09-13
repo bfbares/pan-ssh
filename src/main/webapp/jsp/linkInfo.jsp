@@ -15,13 +15,13 @@
 	    		<s:url action="upvote" id="upvote">
 					<s:param name="id" value="fullLink.link.linkId" />
 				</s:url>
-		    	<p><s:a href="%{upvote}"><i class="icon-arrow-up"></i></s:a></p>
+		    	<p><s:a href="%{upvote}" cssClass="upv" data-id="%{fullLink.link.linkId}"><i class="icon-arrow-up"></i></s:a></p>
 		    	<p><s:text name="form.vote" /></p>
 		    	<p><span class="badge badge-info"><s:property value="fullLink.numberOfVotes"/></span></p>
 		    	<s:url action="downvote" id="downvote">
 					<s:param name="id" value="fullLink.link.linkId" />
 				</s:url>
-		    	<p><s:a href="%{downvote}"><i class="icon-arrow-down"></i></s:a></p>
+		    	<p><s:a href="%{downvote}" cssClass="downv" data-id="%{fullLink.link.linkId}"><i class="icon-arrow-down"></i></s:a></p>
 	    	</div>
     	</s:else>
 	    </s:if>
@@ -164,12 +164,12 @@
 					<s:url action="c_upvote" id="c_upvote">
 						<s:param name="id" value="comment.commentId" />
 					</s:url>
-			    	<p class="pull-left"><s:a href="%{c_upvote}"><i class="icon-arrow-up"></i></s:a>
+			    	<p class="pull-left"><s:a href="%{c_upvote}" cssClass="cupv" data-id="%{comment.commentId}"><i class="icon-arrow-up"></i></s:a>
 			    	<span class="badge badge-inverse"><s:text name="comment.karma" />: <s:property value="comment.karma"/></span>
 			    	<s:url action="c_downvote" id="c_downvote">
 						<s:param name="id" value="comment.commentId" />
 					</s:url>
-			    	<s:a href="%{c_downvote}"><i class="icon-arrow-down"></i></s:a></p>
+			    	<s:a href="%{c_downvote}" cssClass="cupv" data-id="%{comment.commentId}"><i class="icon-arrow-down"></i></s:a></p>
 			    </s:if>
 			    <s:else>
 			    	<p class="pull-left"><span class="badge badge-inverse"><s:text name="comment.karma" />: <s:property value="comment.karma"/></span></p>

@@ -65,7 +65,7 @@ public class LinkVoteSubmitAction extends ActionSupport implements SessionAware,
 	}
 
 	private String vote() throws Exception{
-		link = panService.findLink(id);;
+		link = panService.findLink(id);
 		String ip = request.getRemoteAddr();
 		
 		if (session.containsKey(GlobalNames.USER)) {
