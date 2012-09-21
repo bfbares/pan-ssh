@@ -36,8 +36,8 @@
 		</global-results>
 
 		<!-- Uncomment for deployment -->
-		<global-exception-mappings> <exception-mapping exception="java.lang.Exception" 
-			result="error" /> </global-exception-mappings>
+		<!-- <global-exception-mappings> <exception-mapping exception="java.lang.Exception" 
+			result="error" /> </global-exception-mappings> -->
 
 		<action name="about">
 			<result>/about</result>
