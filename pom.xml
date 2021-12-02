@@ -19,7 +19,7 @@
 		<slf4j.version>1.6.1</slf4j.version>
 		<javassist.version>3.9.0.GA</javassist.version>
 		<cglib.version>2.2</cglib.version>
-		<struts.version>2.3.3</struts.version>
+		<struts.version>2.5.22</struts.version>
 		<jettyMavenPlugin>7.3.1.v20110307</jettyMavenPlugin>
 		<tiles.version>2.2.2</tiles.version>
 	</properties>
